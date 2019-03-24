@@ -242,6 +242,139 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/24/搭建个人免费博客/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/24/搭建个人免费博客/" itemprop="url">github和hexo搭建个人免费博客</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T20:48:26+08:00">
+                2019-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>####安装node<br>作用是生成静态页面（github上存的都是静态页面）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -</span><br><span class="line">curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -   // 如果想用6.x版本</span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure></p>
+<p>####安装git<br>作用是把本地的hexo内容提交到github上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install git</span><br></pre></td></tr></table></figure></p>
+<p>####注册github账号<br>作用是用来做远程仓库，由于github公司的服务器是一直运行的，所以你放在上面的页面也可以一直被访问<br>配置SSH Keys<br>设置用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;your name&quot;</span><br><span class="line">git config --globa user.email &quot;your email.com&quot;</span><br></pre></td></tr></table></figure></p>
+<p>####生成ssh key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;  //your_email@example.com 替换为你的邮箱</span><br></pre></td></tr></table></figure></p>
+<p>当你看到 Enter a file in which to save the key 的提示后，按Enter键.意思就是使用默认路径，看到 type a secure passphrase的提示后，输入你的密码。至此ssh key 就生成了。接下来就是将 ssh key 的公钥 添加到github。找到刚才我们刚才路径下的 .ssh文件，Ctrl+h显示隐藏文件，打开ssh.pub文件，将其中的内容全部复制，在github上新建ssh，把刚刚复制的内容粘贴到输入框即可</p>
+<p>####安装hexo：作用是一个博客框架，支持markdown语法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
+<p>安装完成之后还要执行下列命令，进行框架的初始化<br>hexo init 初始化工作空间，例如： hexo init myblog/ 意思就是在home目录下新建了myblog工作空间<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd myblog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></p>
+<p>至此hexo已经安装完毕了，启动服务hexo server。默认的端口号是4000，你就可以通过<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 访问了，如果4000端口被占用，可以使用 hexo server -p 5000命令，换成5000端口启动服务</p>
+<p>####github与本地hexo建立连接<br>新建仓库<br>注意：<strong>建立仓库时注意仓库名的格式必须为【你的github名称.github.io】</strong><br>修改站点（站点就是上一步的工作空间）配置文件_config.yml的部署信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:YiShanQingF/YiShanQingF.github.io.git</span><br><span class="line">  branch: master</span><br><span class="line">  message: &apos;站点更新:&#123;&#123;now(&quot;YYYY-MM-DD HH:mm:ss&quot;)&#125;&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<p><strong>建议复制修改，因为空格符号什么的很容易敲错</strong><br>执行下面命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git –save</span><br><span class="line">hexo clean  //清楚缓存，我的理解就是删除工作空间下的public文件夹，而public文件夹下面存放的就是生成的静态界面</span><br><span class="line">hexo generate  //把你的文章变成静态界面，所以如果你写了一篇新文章，或者修改了主题，你就必须执行这一步才能看到效果</span><br><span class="line">hexo deploy  //把本地的静态文件同步到github</span><br></pre></td></tr></table></figure></p>
+<p>现在你就可以通过输入http://你的仓库名。例如我的就是：<a href="http://breakpointworld.github.io" target="_blank" rel="noopener">http://breakpointworld.github.io</a>  </p>
+<p>####绑定域名<br>在hexo的工作空间下的source目录下新建一个CNAME的文件，里面写上购买的域名<br>修改域名解析如下：记录类型为CNAME，主机记录为@，解析线路：默认，记录值：breakpointworld.github.io<br>大功告成！！！  </p>
+<p>####注意点一：如果你想github pages发布在一级目录，那么你的仓库名必须跟你的github名称一致，否则你的github pages会自动发布在二级目录。如下图所示：<br><img src="/picture/github和hexo搭建个人免费博客/1.jpg" alt="图一"><br><img src="/picture/github和hexo搭建个人免费博客/2.jpg" alt="图一"></p>
+<p>ps：最后附上我参考的两个链接，里面介绍的很详细。<br><a href="http://blog.csdn.net/autuan_liu/article/details/50854925" target="_blank" rel="noopener">Ubuntu平台下通过Hexo在Github上搭建博客教程</a><br><a href="http://www.jianshu.com/p/a3ab83dba041" target="_blank" rel="noopener">Ubuntu下与github建立ssh连接</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/24/查询表空大小和连接数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -566,7 +699,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -579,7 +712,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -640,7 +773,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共682字</span>
+  <span class="post-count">博客全站共1.5k字</span>
 </div>
 
 
