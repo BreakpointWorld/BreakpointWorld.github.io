@@ -274,6 +274,415 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/搭建个人免费博客/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/25/搭建个人免费博客/" itemprop="url">github和hexo搭建个人免费博客</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T00:01:10+08:00">
+                2019-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="安装node"><a href="#安装node" class="headerlink" title="安装node"></a>安装node</h4><p>作用是生成静态页面（github上存的都是静态页面）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -</span><br><span class="line">curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -   // 如果想用6.x版本</span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure></p>
+<h4 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h4><p>作用是把本地的hexo内容提交到github上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    apt install git</span><br><span class="line">```  </span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">####   注册github账号  </span><br><span class="line">作用是用来做远程仓库，由于github公司的服务器是一直运行的，所以你放在上面的页面也可以一直被访问  </span><br><span class="line">配置SSH Keys  </span><br><span class="line">设置用户</span><br></pre></td></tr></table></figure></p>
+<pre><code>git config --global user.name &quot;your name&quot;
+git config --globa user.email &quot;your email.com&quot;
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">####   生成ssh key</span><br></pre></td></tr></table></figure>
+<p>ssh-keygen -t rsa -b 4096 -C “<a href="mailto:your_email@example.com" target="_blank" rel="noopener">your_email@example.com</a>“  <a href="mailto://your_email@example.com" target="_blank" rel="noopener">//your_email@example.com</a> 替换为你的邮箱<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当你看到 Enter a file in which to save the key 的提示后，按Enter键.意思就是使用默认路径，看到 type a secure passphrase的提示后，输入你的密码。至此ssh key 就生成了。接下来就是将 ssh key 的公钥 添加到github。找到刚才我们刚才路径下的 .ssh文件，Ctrl+h显示隐藏文件，打开ssh.pub文件，将其中的内容全部复制，在github上新建ssh，把刚刚复制的内容粘贴到输入框即可</span><br><span class="line">####   安装hexo：作用是一个博客框架，支持markdown语法</span><br></pre></td></tr></table></figure></p>
+<pre><code>npm install -g hexo-cli
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装完成之后还要执行下列命令，进行框架的初始化  </span><br><span class="line">hexo init 初始化工作空间，例如： hexo init myblog/ 意思就是在home目录下新建了myblog工作空间</span><br></pre></td></tr></table></figure>
+<p>cd myblog<br>npm install<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">至此hexo已经安装完毕了，启动服务hexo server。默认的端口号是4000，你就可以通过http://localhost:4000/ 访问了，如果4000端口被占用，可以使用 hexo server -p 5000命令，换成5000端口启动服务</span><br><span class="line">####   github与本地hexo建立连接</span><br><span class="line">新建仓库</span><br><span class="line">注意：**建立仓库时注意仓库名的格式必须为【你的github名称.github.io】**  </span><br><span class="line">修改站点（站点就是上一步的工作空间）配置文件_config.yml的部署信息</span><br></pre></td></tr></table></figure></p>
+<pre><code>deploy:
+  type: git
+  repo: git@github.com:YiShanQingF/YiShanQingF.github.io.git
+  branch: master
+  message: &apos;站点更新:{{now("YYYY-MM-DD HH:mm:ss")}}&apos;
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">**建议复制修改，因为空格符号什么的很容易敲错**</span><br><span class="line">执行下面命令</span><br></pre></td></tr></table></figure>
+<p>npm install hexo-deployer-git –save<br>hexo clean  //清楚缓存，我的理解就是删除工作空间下的public文件夹，而public文件夹下面存放的就是生成的静态界面<br>hexo generate  //把你的文章变成静态界面，所以如果你写了一篇新文章，或者修改了主题，你就必须执行这一步才能看到效果<br>hexo deploy  //把本地的静态文件同步到github<br><code>`</code><br>现在你就可以通过输入http://你的仓库名。例如我的就是：<a href="http://breakpointworld.github.io" target="_blank" rel="noopener">http://breakpointworld.github.io</a>  </p>
+<h4 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h4><p>在hexo的工作空间下的source目录下新建一个CNAME的文件，里面写上购买的域名<br>修改域名解析如下：记录类型为CNAME，主机记录为@，解析线路：默认，记录值：breakpointworld.github.io<br>大功告成！！！  </p>
+<h4 id="注意点一：如果你想github-pages发布在一级目录，那么你的仓库名必须跟你的github名称一致，否则你的github-pages会自动发布在二级目录。如下图所示："><a href="#注意点一：如果你想github-pages发布在一级目录，那么你的仓库名必须跟你的github名称一致，否则你的github-pages会自动发布在二级目录。如下图所示：" class="headerlink" title="注意点一：如果你想github pages发布在一级目录，那么你的仓库名必须跟你的github名称一致，否则你的github pages会自动发布在二级目录。如下图所示："></a>注意点一：如果你想github pages发布在一级目录，那么你的仓库名必须跟你的github名称一致，否则你的github pages会自动发布在二级目录。如下图所示：</h4><p><img src="/picture/github和hexo搭建个人免费博客/1.png" alt="图一"><br><img src="/picture/github和hexo搭建个人免费博客/2.png" alt="图一"></p>
+<p>ps：最后附上我参考的两个链接，里面介绍的很详细：<br><a href="http://blog.csdn.net/autuan_liu/article/details/50854925" target="_blank" rel="noopener">Ubuntu平台下通过Hexo在Github上搭建博客教程</a><br><a href="http://www.jianshu.com/p/a3ab83dba041" target="_blank" rel="noopener">Ubuntu下与github建立ssh连接</a>  </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/与室友游广州/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/25/与室友游广州/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T00:00:55+08:00">
+                2019-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <hr>
+<p>title: 对着珠江喝酒打屁<br>tags: </p>
+<ul>
+<li>生活</li>
+</ul>
+<hr>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/25/与室友游广州/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/数据泵操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/25/数据泵操作/" itemprop="url">oracle操作之数据泵操作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T00:00:22+08:00">
+                2019-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>创建目录：确保此目录已经授权给用户了</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create directory dump_dir as &apos;/home/oracle/backup&apos;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建临时表空间  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create temporary tablespace bx_temp </span><br><span class="line">    tempfile &apos;\home\oracle\bx_temp.dbf&apos; </span><br><span class="line">    size 50m autoextend on next 50m maxsize 2048m extent management local</span><br></pre></td></tr></table></figure>
+<p>如果导入时发现临时文件空间不足：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter tablespace bx_temp  </span><br><span class="line">    add tempfile &apos;\home\oracle\bx_temp1.dbf&apos; size 100M autoextend on next 20M maxsize 1024M</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建表空间</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create tablespace bx</span><br><span class="line">	  logging</span><br><span class="line">	  datafile &apos;\home\oracle\bx.dbf&apos;</span><br><span class="line">	  size 50m autoextend on next 50m maxsize 2048m extent management local</span><br><span class="line">```  </span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">-   创建用户</span><br></pre></td></tr></table></figure>
+<p>create user bxUser identified by bxPassword default tablespace bx  temporary tablespace bx_temp</p>
+<p>drop user userName cascade –删除用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-   授权</span><br></pre></td></tr></table></figure></p>
+<p>grant create session,connect,resource,select any table to bxUser<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 	  1. 收回权限：</span><br><span class="line">	     revoke dba from bxUser</span><br><span class="line">	  2.授予用户操作directory的权限</span><br><span class="line">	     grant read,write on directory DUMP_DIR to bxUser</span><br><span class="line">-   删除表空间</span><br></pre></td></tr></table></figure></p>
+<p>drop tablespace 名字 including contents and datafiles<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-   数据泵导入</span><br></pre></td></tr></table></figure></p>
+<p>impdp 用户名/密码  directory=dump_dir dumpfile=abc.dmp  REMAP_SCHEMA=原用户名:现用户名<br>REMAP_TABLESPACE=原表空间名:现表空间名 full=y logfile=abc.log<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">注意点一：用impdp 导入，检查 table_statistics 时等待了N长时间     </span><br><span class="line">解决办法：EXCLUDE=TABLE_STATISTICS 选项将 table_statistics 对象过滤  </span><br><span class="line"></span><br><span class="line">注意点二：ORA-14460: only one COMPRESS or NOCOMPRESS clause may be specified  </span><br><span class="line">解决办法：导入命令加入 transform=segment_attributes:n  </span><br><span class="line"></span><br><span class="line">注意点三：待补充</span><br><span class="line">-   数据泵导出</span><br></pre></td></tr></table></figure></p>
+<p>expdp 用户名/密码@ip/orcl directory=dump_dir dumpfile=abc.dmp  logfile=abc.log<br><code>`</code></p>
+<ul>
+<li>常用sql<br>查看用户拥有的角色：select <em> from user_role_privs<br>查看用户所有的权限：select </em> from session_privs<br>查询所有表空间：select <em> from dba_tablespaces<br>查询用户属于哪一个表空间，在system用户下查找：select default_tablespace from dba_users where username=’用户名（必须大写）’<br>查询所有目录，在拥有DBA权限的用户下查：select </em> from dba_directories  </li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/24/查询表空大小和连接数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -355,433 +764,6 @@
         
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/24/数据泵操作/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="龚宇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/tutu.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BreakPW">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/24/数据泵操作/" itemprop="url">oracle操作之数据泵操作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T23:56:53+08:00">
-                2019-03-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ul>
-<li>创建目录：确保此目录已经授权给用户了</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create directory dump_dir as &apos;/home/oracle/backup&apos;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建临时表空间  </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create temporary tablespace bx_temp </span><br><span class="line">    tempfile &apos;\home\oracle\bx_temp.dbf&apos; </span><br><span class="line">    size 50m autoextend on next 50m maxsize 2048m extent management local</span><br></pre></td></tr></table></figure>
-<p>如果导入时发现临时文件空间不足：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter tablespace bx_temp  </span><br><span class="line">    add tempfile &apos;\home\oracle\bx_temp1.dbf&apos; size 100M autoextend on next 20M maxsize 1024M</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建表空间</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create tablespace bx</span><br><span class="line">	  logging</span><br><span class="line">	  datafile &apos;\home\oracle\bx.dbf&apos;</span><br><span class="line">	  size 50m autoextend on next 50m maxsize 2048m extent management local</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建用户</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create user bxUser identified by bxPassword default tablespace bx  temporary tablespace bx_temp</span><br><span class="line"></span><br><span class="line">drop user userName cascade --删除用户</span><br></pre></td></tr></table></figure>
-<ul>
-<li>授权</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant create session,connect,resource,select any table to bxUser</span><br></pre></td></tr></table></figure>
-<ul>
-<li><ol>
-<li>收回权限：<br>revoke dba from bxUser<br>2.授予用户操作directory的权限<br>grant read,write on directory DUMP_DIR to bxUser</li>
-</ol>
-</li>
-<li>删除表空间</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop tablespace 名字 including contents and datafiles</span><br></pre></td></tr></table></figure>
-<ul>
-<li>数据泵导入</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">impdp 用户名/密码  directory=dump_dir dumpfile=abc.dmp  REMAP_SCHEMA=原用户名:现用户名 </span><br><span class="line">REMAP_TABLESPACE=原表空间名:现表空间名 full=y logfile=abc.log</span><br></pre></td></tr></table></figure>
-<p>注意点一：用impdp 导入，检查 table_statistics 时等待了N长时间<br>解决办法：EXCLUDE=TABLE_STATISTICS 选项将 table_statistics 对象过滤  </p>
-<p>注意点二：ORA-14460: only one COMPRESS or NOCOMPRESS clause may be specified<br>解决办法：导入命令加入 transform=segment_attributes:n  </p>
-<p>注意点三：待补充</p>
-<ul>
-<li>数据泵导出</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expdp 用户名/密码@ip/orcl directory=dump_dir dumpfile=abc.dmp  logfile=abc.log</span><br></pre></td></tr></table></figure>
-<ul>
-<li>常用sql<br>查看用户拥有的角色：select <em> from user_role_privs<br>查看用户所有的权限：select </em> from session_privs<br>查询所有表空间：select <em> from dba_tablespaces<br>查询用户属于哪一个表空间，在system用户下查找：select default_tablespace from dba_users where username=’用户名（必须大写）’<br>查询所有目录，在拥有DBA权限的用户下查：select </em> from dba_directories
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/24/数据泵操作/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </li></ul></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/24/与室友游广州/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="龚宇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/tutu.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BreakPW">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/24/与室友游广州/" itemprop="url">对着珠江喝酒打屁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T23:56:37+08:00">
-                2019-03-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="/picture/与室友游广州/1.png" alt="图一"><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/24/与室友游广州/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/24/搭建个人免费博客/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="龚宇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/tutu.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BreakPW">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/24/搭建个人免费博客/" itemprop="url">github和hexo搭建个人免费博客</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T23:56:25+08:00">
-                2019-03-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="安装node"><a href="#安装node" class="headerlink" title="安装node"></a>安装node</h4><p>作用是生成静态页面（github上存的都是静态页面）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -</span><br><span class="line">curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -   // 如果想用6.x版本</span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure></p>
-<h4 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h4><p>作用是把本地的hexo内容提交到github上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install git</span><br></pre></td></tr></table></figure></p>
-<h4 id="注册github账号"><a href="#注册github账号" class="headerlink" title="注册github账号"></a>注册github账号</h4><p>作用是用来做远程仓库，由于github公司的服务器是一直运行的，所以你放在上面的页面也可以一直被访问<br>配置SSH Keys<br>设置用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;your name&quot;</span><br><span class="line">git config --globa user.email &quot;your email.com&quot;</span><br></pre></td></tr></table></figure></p>
-<h4 id="生成ssh-key"><a href="#生成ssh-key" class="headerlink" title="生成ssh key"></a>生成ssh key</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;  //your_email@example.com 替换为你的邮箱</span><br></pre></td></tr></table></figure>
-<p>当你看到 Enter a file in which to save the key 的提示后，按Enter键.意思就是使用默认路径，看到 type a secure passphrase的提示后，输入你的密码。至此ssh key 就生成了。接下来就是将 ssh key 的公钥 添加到github。找到刚才我们刚才路径下的 .ssh文件，Ctrl+h显示隐藏文件，打开ssh.pub文件，将其中的内容全部复制，在github上新建ssh，把刚刚复制的内容粘贴到输入框即可</p>
-<h4 id="安装hexo：作用是一个博客框架，支持markdown语法"><a href="#安装hexo：作用是一个博客框架，支持markdown语法" class="headerlink" title="安装hexo：作用是一个博客框架，支持markdown语法"></a>安装hexo：作用是一个博客框架，支持markdown语法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<p>安装完成之后还要执行下列命令，进行框架的初始化<br>hexo init 初始化工作空间，例如： hexo init myblog/ 意思就是在home目录下新建了myblog工作空间<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd myblog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></p>
-<p>至此hexo已经安装完毕了，启动服务hexo server。默认的端口号是4000，你就可以通过<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 访问了，如果4000端口被占用，可以使用 hexo server -p 5000命令，换成5000端口启动服务</p>
-<h4 id="github与本地hexo建立连接"><a href="#github与本地hexo建立连接" class="headerlink" title="github与本地hexo建立连接"></a>github与本地hexo建立连接</h4><p>新建仓库<br>注意：<strong>建立仓库时注意仓库名的格式必须为【你的github名称.github.io】</strong><br>修改站点（站点就是上一步的工作空间）配置文件_config.yml的部署信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:YiShanQingF/YiShanQingF.github.io.git</span><br><span class="line">  branch: master</span><br><span class="line">  message: &apos;站点更新:&#123;&#123;now(&quot;YYYY-MM-DD HH:mm:ss&quot;)&#125;&#125;&apos;</span><br></pre></td></tr></table></figure></p>
-<p><strong>建议复制修改，因为空格符号什么的很容易敲错</strong><br>执行下面命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git –save</span><br><span class="line">hexo clean  //清楚缓存，我的理解就是删除工作空间下的public文件夹，而public文件夹下面存放的就是生成的静态界面</span><br><span class="line">hexo generate  //把你的文章变成静态界面，所以如果你写了一篇新文章，或者修改了主题，你就必须执行这一步才能看到效果</span><br><span class="line">hexo deploy  //把本地的静态文件同步到github</span><br></pre></td></tr></table></figure></p>
-<p>现在你就可以通过输入http://你的仓库名。例如我的就是：<a href="http://breakpointworld.github.io" target="_blank" rel="noopener">http://breakpointworld.github.io</a>  </p>
-<h4 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h4><p>在hexo的工作空间下的source目录下新建一个CNAME的文件，里面写上购买的域名<br>修改域名解析如下：记录类型为CNAME，主机记录为@，解析线路：默认，记录值：breakpointworld.github.io<br>大功告成！！！  </p>
-<h4 id="注意点一：如果你想github-pages发布在一级目录，那么你的仓库名必须跟你的github名称一致，否则你的github-pages会自动发布在二级目录。如下图所示："><a href="#注意点一：如果你想github-pages发布在一级目录，那么你的仓库名必须跟你的github名称一致，否则你的github-pages会自动发布在二级目录。如下图所示：" class="headerlink" title="注意点一：如果你想github pages发布在一级目录，那么你的仓库名必须跟你的github名称一致，否则你的github pages会自动发布在二级目录。如下图所示："></a>注意点一：如果你想github pages发布在一级目录，那么你的仓库名必须跟你的github名称一致，否则你的github pages会自动发布在二级目录。如下图所示：</h4><p><img src="/picture/github和hexo搭建个人免费博客/1.png" alt="图一"><br><img src="/picture/github和hexo搭建个人免费博客/2.png" alt="图一"></p>
-<p>ps：最后附上我参考的两个链接，里面介绍的很详细：<br><a href="http://blog.csdn.net/autuan_liu/article/details/50854925" target="_blank" rel="noopener">Ubuntu平台下通过Hexo在Github上搭建博客教程</a><br><a href="http://www.jianshu.com/p/a3ab83dba041" target="_blank" rel="noopener">Ubuntu下与github建立ssh连接</a><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/24/搭建个人免费博客/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
     
     
     
@@ -934,7 +916,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共1.5k字</span>
+  <span class="post-count">博客全站共1.6k字</span>
 </div>
 
 

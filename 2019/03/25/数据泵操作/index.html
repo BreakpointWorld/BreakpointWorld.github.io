@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Oracle数据库,">
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="记录这个花花世界">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BreakPW">
-<meta property="og:url" content="http://yoursite.com/tags/github/index.html">
+<meta name="description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
+<meta name="keywords" content="Oracle数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oracle操作之数据泵操作">
+<meta property="og:url" content="http://yoursite.com/2019/03/25/数据泵操作/index.html">
 <meta property="og:site_name" content="BreakPW">
-<meta property="og:description" content="记录这个花花世界">
+<meta property="og:description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-24T16:00:22.503Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BreakPW">
-<meta name="twitter:description" content="记录这个花花世界">
+<meta name="twitter:title" content="oracle操作之数据泵操作">
+<meta name="twitter:description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/github/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/25/数据泵操作/">
 
 
 
 
 
-  <title>标签: github | BreakPW</title>
+  <title>oracle操作之数据泵操作 | BreakPW</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -259,52 +261,173 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>github<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/数据泵操作/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/03/25/搭建个人免费博客/" itemprop="url">
-              
-                <span itemprop="name">github和hexo搭建个人免费博客</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">oracle操作之数据泵操作</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-25T00:01:10+08:00" content="2019-03-25">
-          03-25
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T00:00:22+08:00">
+                2019-03-25
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>创建目录：确保此目录已经授权给用户了</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create directory dump_dir as &apos;/home/oracle/backup&apos;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建临时表空间  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create temporary tablespace bx_temp </span><br><span class="line">    tempfile &apos;\home\oracle\bx_temp.dbf&apos; </span><br><span class="line">    size 50m autoextend on next 50m maxsize 2048m extent management local</span><br></pre></td></tr></table></figure>
+<p>如果导入时发现临时文件空间不足：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter tablespace bx_temp  </span><br><span class="line">    add tempfile &apos;\home\oracle\bx_temp1.dbf&apos; size 100M autoextend on next 20M maxsize 1024M</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建表空间</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create tablespace bx</span><br><span class="line">	  logging</span><br><span class="line">	  datafile &apos;\home\oracle\bx.dbf&apos;</span><br><span class="line">	  size 50m autoextend on next 50m maxsize 2048m extent management local</span><br><span class="line">```  </span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">-   创建用户</span><br></pre></td></tr></table></figure>
+<p>create user bxUser identified by bxPassword default tablespace bx  temporary tablespace bx_temp</p>
+<p>drop user userName cascade –删除用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-   授权</span><br></pre></td></tr></table></figure></p>
+<p>grant create session,connect,resource,select any table to bxUser<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 	  1. 收回权限：</span><br><span class="line">	     revoke dba from bxUser</span><br><span class="line">	  2.授予用户操作directory的权限</span><br><span class="line">	     grant read,write on directory DUMP_DIR to bxUser</span><br><span class="line">-   删除表空间</span><br></pre></td></tr></table></figure></p>
+<p>drop tablespace 名字 including contents and datafiles<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-   数据泵导入</span><br></pre></td></tr></table></figure></p>
+<p>impdp 用户名/密码  directory=dump_dir dumpfile=abc.dmp  REMAP_SCHEMA=原用户名:现用户名<br>REMAP_TABLESPACE=原表空间名:现表空间名 full=y logfile=abc.log<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">注意点一：用impdp 导入，检查 table_statistics 时等待了N长时间     </span><br><span class="line">解决办法：EXCLUDE=TABLE_STATISTICS 选项将 table_statistics 对象过滤  </span><br><span class="line"></span><br><span class="line">注意点二：ORA-14460: only one COMPRESS or NOCOMPRESS clause may be specified  </span><br><span class="line">解决办法：导入命令加入 transform=segment_attributes:n  </span><br><span class="line"></span><br><span class="line">注意点三：待补充</span><br><span class="line">-   数据泵导出</span><br></pre></td></tr></table></figure></p>
+<p>expdp 用户名/密码@ip/orcl directory=dump_dir dumpfile=abc.dmp  logfile=abc.log<br><code>`</code></p>
+<ul>
+<li>常用sql<br>查看用户拥有的角色：select <em> from user_role_privs<br>查看用户所有的权限：select </em> from session_privs<br>查询所有表空间：select <em> from dba_tablespaces<br>查询用户属于哪一个表空间，在system用户下查找：select default_tablespace from dba_users where username=’用户名（必须大写）’<br>查询所有目录，在拥有DBA权限的用户下查：select </em> from dba_directories  </li>
+</ul>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Oracle数据库/" rel="tag"># Oracle数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/24/查询表空大小和连接数/" rel="next" title="数据库空间查看和连接数查看">
+                <i class="fa fa-chevron-left"></i> 数据库空间查看和连接数查看
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/25/与室友游广州/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -312,6 +435,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -525,6 +652,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
