@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
+<meta name="description" content="-   查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &amp;quot;表空间名&amp;quot;,       　　D.TOT_GROOTTE_MB &amp;quot;表空间大小(M)&amp;quot;,       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &amp;quot;已使用空间(M)&amp;quot">
 <meta name="keywords" content="Oracle数据库">
 <meta property="og:type" content="article">
-<meta property="og:title" content="oracle操作之数据泵操作">
-<meta property="og:url" content="http://yoursite.com/2019/03/18/数据泵操作/index.html">
+<meta property="og:title" content="数据库空间查看和连接数查看">
+<meta property="og:url" content="http://yoursite.com/2019/03/24/查询表空大小和连接数/index.html">
 <meta property="og:site_name" content="BreakPW">
-<meta property="og:description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
+<meta property="og:description" content="-   查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &amp;quot;表空间名&amp;quot;,       　　D.TOT_GROOTTE_MB &amp;quot;表空间大小(M)&amp;quot;,       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &amp;quot;已使用空间(M)&amp;quot">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-18T13:55:44.848Z">
+<meta property="og:updated_time" content="2019-03-24T11:29:52.161Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="oracle操作之数据泵操作">
-<meta name="twitter:description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
+<meta name="twitter:title" content="数据库空间查看和连接数查看">
+<meta name="twitter:description" content="-   查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &amp;quot;表空间名&amp;quot;,       　　D.TOT_GROOTTE_MB &amp;quot;表空间大小(M)&amp;quot;,       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &amp;quot;已使用空间(M)&amp;quot">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/18/数据泵操作/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/24/查询表空大小和连接数/">
 
 
 
 
 
-  <title>oracle操作之数据泵操作 | BreakPW</title>
+  <title>数据库空间查看和连接数查看 | BreakPW</title>
   
 
 
@@ -243,7 +243,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/18/数据泵操作/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/24/查询表空大小和连接数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="龚宇">
@@ -260,7 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">oracle操作之数据泵操作</h1>
+          <h1 class="post-title" itemprop="name headline">数据库空间查看和连接数查看</h1>
         
 
         <div class="post-meta">
@@ -272,8 +272,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-18T21:55:44+08:00">
-                2019-03-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T19:29:52+08:00">
+                2019-03-24
               </time>
             
 
@@ -310,51 +310,14 @@
       
 
       
-        <ul>
-<li>创建目录：确保此目录已经授权给用户了</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create directory dump_dir as &apos;/home/oracle/backup&apos;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建临时表空间  </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create temporary tablespace bx_temp </span><br><span class="line">    tempfile &apos;\home\oracle\bx_temp.dbf&apos; </span><br><span class="line">    size 50m autoextend on next 50m maxsize 2048m extent management local</span><br></pre></td></tr></table></figure>
-<p>如果导入时发现临时文件空间不足：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter tablespace bx_temp  </span><br><span class="line">    add tempfile &apos;\home\oracle\bx_temp1.dbf&apos; size 100M autoextend on next 20M maxsize 1024M</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建表空间</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create tablespace bx</span><br><span class="line">	  logging</span><br><span class="line">	  datafile &apos;\home\oracle\bx.dbf&apos;</span><br><span class="line">	  size 50m autoextend on next 50m maxsize 2048m extent management local</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建用户</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create user bxUser identified by bxPassword default tablespace bx  temporary tablespace bx_temp</span><br><span class="line"></span><br><span class="line">drop user userName cascade --删除用户</span><br></pre></td></tr></table></figure>
-<ul>
-<li>授权</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant create session,connect,resource,select any table to bxUser</span><br></pre></td></tr></table></figure>
-<ul>
-<li><ol>
-<li>收回权限：<br>revoke dba from bxUser<br>2.授予用户操作directory的权限<br>grant read,write on directory DUMP_DIR to bxUser</li>
-</ol>
-</li>
-<li>删除表空间</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop tablespace 名字 including contents and datafiles</span><br></pre></td></tr></table></figure>
-<ul>
-<li>数据泵导入</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">impdp 用户名/密码  directory=dump_dir dumpfile=abc.dmp  REMAP_SCHEMA=原用户名:现用户名 </span><br><span class="line">REMAP_TABLESPACE=原表空间名:现表空间名 full=y logfile=abc.log</span><br></pre></td></tr></table></figure>
-<p>注意点一：用impdp 导入，检查 table_statistics 时等待了N长时间<br>解决办法：EXCLUDE=TABLE_STATISTICS 选项将 table_statistics 对象过滤  </p>
-<p>注意点二：ORA-14460: only one COMPRESS or NOCOMPRESS clause may be specified<br>解决办法：导入命令加入 transform=segment_attributes:n  </p>
-<p>注意点三：待补充</p>
-<ul>
-<li>数据泵导出</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expdp 用户名/密码@ip/orcl directory=dump_dir dumpfile=abc.dmp  logfile=abc.log</span><br></pre></td></tr></table></figure>
-<ul>
-<li>常用sql<br>查看用户拥有的角色：select <em> from user_role_privs<br>查看用户所有的权限：select </em> from session_privs<br>查询所有表空间：select <em> from dba_tablespaces<br>查询用户属于哪一个表空间，在system用户下查找：select default_tablespace from dba_users where username=’用户名（必须大写）’<br>查询所有目录，在拥有DBA权限的用户下查：select </em> from dba_directories  </li>
-</ul>
-
+        <h5 id="查询表空间的大小和占用率"><a href="#查询表空间的大小和占用率" class="headerlink" title="-   查询表空间的大小和占用率"></a>-   查询表空间的大小和占用率</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;,</span><br><span class="line">       　　D.TOT_GROOTTE_MB &quot;表空间大小(M)&quot;,</span><br><span class="line">       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;,</span><br><span class="line">       　　TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) /</span><br><span class="line">                       D.TOT_GROOTTE_MB * 100,</span><br><span class="line">                       2),</span><br><span class="line">                 　　 &apos;990.99&apos;) &quot;使用比&quot;,</span><br><span class="line">       　　F.TOTAL_BYTES &quot;空闲空间(M)&quot;,</span><br><span class="line">       　　F.MAX_BYTES &quot;最大块(M)&quot; 　　</span><br><span class="line">		FROM (SELECT TABLESPACE_NAME,</span><br><span class="line">         　　ROUND(SUM(BYTES) / (1024 * 1024),2) TOTAL_BYTES,</span><br><span class="line">             ROUND(MAX(BYTES) / (1024 * 1024),2) MAX_BYTES 　　</span><br><span class="line">             FROM SYS.DBA_FREE_SPACE 　　</span><br><span class="line">             GROUP BY TABLESPACE_NAME) F,</span><br><span class="line"> 　 		(SELECT DD.TABLESPACE_NAME,</span><br><span class="line">         　　	ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_DATA_FILES DD  GROUP BY DD.TABLESPACE_NAME) D 　　</span><br><span class="line">			WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME 　　</span><br><span class="line">		ORDER BY 4 DESC</span><br></pre></td></tr></table></figure>
+<h5 id="查看最大连接数"><a href="#查看最大连接数" class="headerlink" title="-   查看最大连接数"></a>-   查看最大连接数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">      SQL&gt; select count(*) from v$session #当前的连接数</span><br><span class="line">SQL&gt; Select count(*) from v$session where status=&apos;ACTIVE&apos; #并发连接数</span><br><span class="line">SQL&gt; select value from v$parameter where name = &apos;processes&apos; --数据库允许的最大连接数</span><br><span class="line">SQL&gt; show parameter processes #最大连接 </span><br><span class="line">SQL&gt; select username,count(username) from v$session where username is not null group by username; #查看不同用户的连接数</span><br></pre></td></tr></table></figure>
+<h5 id="修改最大连接数"><a href="#修改最大连接数" class="headerlink" title="-   修改最大连接数"></a>-   修改最大连接数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter system set processes = 2000 scope = spfile;</span><br></pre></td></tr></table></figure>
+<h5 id="重启数据库"><a href="#重启数据库" class="headerlink" title="-   重启数据库"></a>-   重启数据库</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shutdown immediate;</span><br><span class="line">startup;</span><br></pre></td></tr></table></figure>
+<h5 id="监听操作"><a href="#监听操作" class="headerlink" title="-   监听操作"></a>-   监听操作</h5><pre><code>监听查看:lsnrctl status   
+启动监听:lsnrctl start   
+停止监听:lsnrctl stop
+</code></pre>
       
     </div>
     
@@ -384,15 +347,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/03/18/数据泵操作/" rel="next" title="oracle操作之数据泵操作">
+                <i class="fa fa-chevron-left"></i> oracle操作之数据泵操作
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/24/查询表空大小和连接数/" rel="prev" title="数据库空间查看和连接数查看">
-                数据库空间查看和连接数查看 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -444,8 +407,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -498,6 +470,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#查询表空间的大小和占用率"><span class="nav-number">1.</span> <span class="nav-text">-   查询表空间的大小和占用率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看最大连接数"><span class="nav-number">2.</span> <span class="nav-text">-   查看最大连接数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修改最大连接数"><span class="nav-number">3.</span> <span class="nav-text">-   修改最大连接数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重启数据库"><span class="nav-number">4.</span> <span class="nav-text">-   重启数据库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#监听操作"><span class="nav-number">5.</span> <span class="nav-text">-   监听操作</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
