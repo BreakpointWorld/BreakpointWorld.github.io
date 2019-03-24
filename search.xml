@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[数据库空间查看和连接数查看]]></title>
+    <url>%2F2019%2F03%2F24%2F%E6%9F%A5%E8%AF%A2%E8%A1%A8%E7%A9%BA%E5%A4%A7%E5%B0%8F%E5%92%8C%E8%BF%9E%E6%8E%A5%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[- 查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100, 2), &apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BYTES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(SUM(BYTES) / (1024 * 1024),2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024),2) MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLESPACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_DATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME ORDER BY 4 DESC - 查看最大连接数12345 SQL&gt; select count(*) from v$session #当前的连接数SQL&gt; Select count(*) from v$session where status=&apos;ACTIVE&apos; #并发连接数SQL&gt; select value from v$parameter where name = &apos;processes&apos; --数据库允许的最大连接数SQL&gt; show parameter processes #最大连接 SQL&gt; select username,count(username) from v$session where username is not null group by username; #查看不同用户的连接数 - 修改最大连接数1alter system set processes = 2000 scope = spfile; - 重启数据库12shutdown immediate;startup; - 监听操作监听查看:lsnrctl status 启动监听:lsnrctl start 停止监听:lsnrctl stop]]></content>
+      <tags>
+        <tag>Oracle数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[oracle操作之数据泵操作]]></title>
+    <url>%2F2019%2F03%2F24%2F%E6%95%B0%E6%8D%AE%E6%B3%B5%E6%93%8D%E4%BD%9C%2F</url>
+    <content type="text"><![CDATA[创建目录：确保此目录已经授权给用户了 1create directory dump_dir as &apos;/home/oracle/backup&apos; 创建临时表空间 123create temporary tablespace bx_temp tempfile &apos;\home\oracle\bx_temp.dbf&apos; size 50m autoextend on next 50m maxsize 2048m extent management local 如果导入时发现临时文件空间不足： 12alter tablespace bx_temp add tempfile &apos;\home\oracle\bx_temp1.dbf&apos; size 100M autoextend on next 20M maxsize 1024M 创建表空间 1234create tablespace bx logging datafile &apos;\home\oracle\bx.dbf&apos; size 50m autoextend on next 50m maxsize 2048m extent management local 创建用户 123create user bxUser identified by bxPassword default tablespace bx temporary tablespace bx_tempdrop user userName cascade --删除用户 授权 1grant create session,connect,resource,select any table to bxUser 收回权限：revoke dba from bxUser2.授予用户操作directory的权限grant read,write on directory DUMP_DIR to bxUser 删除表空间 1drop tablespace 名字 including contents and datafiles 数据泵导入 12impdp 用户名/密码 directory=dump_dir dumpfile=abc.dmp REMAP_SCHEMA=原用户名:现用户名 REMAP_TABLESPACE=原表空间名:现表空间名 full=y logfile=abc.log 注意点一：用impdp 导入，检查 table_statistics 时等待了N长时间解决办法：EXCLUDE=TABLE_STATISTICS 选项将 table_statistics 对象过滤 注意点二：ORA-14460: only one COMPRESS or NOCOMPRESS clause may be specified解决办法：导入命令加入 transform=segment_attributes:n 注意点三：待补充 数据泵导出 1expdp 用户名/密码@ip/orcl directory=dump_dir dumpfile=abc.dmp logfile=abc.log 常用sql查看用户拥有的角色：select from user_role_privs查看用户所有的权限：select from session_privs查询所有表空间：select from dba_tablespaces查询用户属于哪一个表空间，在system用户下查找：select default_tablespace from dba_users where username=’用户名（必须大写）’查询所有目录，在拥有DBA权限的用户下查：select from dba_directories]]></content>
+      <tags>
+        <tag>Oracle数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[对着珠江喝酒打屁]]></title>
     <url>%2F2019%2F03%2F24%2F%E4%B8%8E%E5%AE%A4%E5%8F%8B%E6%B8%B8%E5%B9%BF%E5%B7%9E%2F</url>
     <content type="text"><![CDATA[]]></content>
@@ -15,22 +31,6 @@
       <tags>
         <tag>Ubuntu</tag>
         <tag>github</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[数据库空间查看和连接数查看]]></title>
-    <url>%2F2019%2F03%2F24%2F%E6%9F%A5%E8%AF%A2%E8%A1%A8%E7%A9%BA%E5%A4%A7%E5%B0%8F%E5%92%8C%E8%BF%9E%E6%8E%A5%E6%95%B0%2F</url>
-    <content type="text"><![CDATA[- 查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100, 2), &apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BYTES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(SUM(BYTES) / (1024 * 1024),2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024),2) MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLESPACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_DATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME ORDER BY 4 DESC - 查看最大连接数12345 SQL&gt; select count(*) from v$session #当前的连接数SQL&gt; Select count(*) from v$session where status=&apos;ACTIVE&apos; #并发连接数SQL&gt; select value from v$parameter where name = &apos;processes&apos; --数据库允许的最大连接数SQL&gt; show parameter processes #最大连接 SQL&gt; select username,count(username) from v$session where username is not null group by username; #查看不同用户的连接数 - 修改最大连接数1alter system set processes = 2000 scope = spfile; - 重启数据库12shutdown immediate;startup; - 监听操作监听查看:lsnrctl status 启动监听:lsnrctl start 停止监听:lsnrctl stop]]></content>
-      <tags>
-        <tag>Oracle数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[oracle操作之数据泵操作]]></title>
-    <url>%2F2019%2F03%2F18%2F%E6%95%B0%E6%8D%AE%E6%B3%B5%E6%93%8D%E4%BD%9C%2F</url>
-    <content type="text"><![CDATA[创建目录：确保此目录已经授权给用户了 1create directory dump_dir as &apos;/home/oracle/backup&apos; 创建临时表空间 123create temporary tablespace bx_temp tempfile &apos;\home\oracle\bx_temp.dbf&apos; size 50m autoextend on next 50m maxsize 2048m extent management local 如果导入时发现临时文件空间不足： 12alter tablespace bx_temp add tempfile &apos;\home\oracle\bx_temp1.dbf&apos; size 100M autoextend on next 20M maxsize 1024M 创建表空间 1234create tablespace bx logging datafile &apos;\home\oracle\bx.dbf&apos; size 50m autoextend on next 50m maxsize 2048m extent management local 创建用户 123create user bxUser identified by bxPassword default tablespace bx temporary tablespace bx_tempdrop user userName cascade --删除用户 授权 1grant create session,connect,resource,select any table to bxUser 收回权限：revoke dba from bxUser2.授予用户操作directory的权限grant read,write on directory DUMP_DIR to bxUser 删除表空间 1drop tablespace 名字 including contents and datafiles 数据泵导入 12impdp 用户名/密码 directory=dump_dir dumpfile=abc.dmp REMAP_SCHEMA=原用户名:现用户名 REMAP_TABLESPACE=原表空间名:现表空间名 full=y logfile=abc.log 注意点一：用impdp 导入，检查 table_statistics 时等待了N长时间解决办法：EXCLUDE=TABLE_STATISTICS 选项将 table_statistics 对象过滤 注意点二：ORA-14460: only one COMPRESS or NOCOMPRESS clause may be specified解决办法：导入命令加入 transform=segment_attributes:n 注意点三：待补充 数据泵导出 1expdp 用户名/密码@ip/orcl directory=dump_dir dumpfile=abc.dmp logfile=abc.log 常用sql查看用户拥有的角色：select from user_role_privs查看用户所有的权限：select from session_privs查询所有表空间：select from dba_tablespaces查询用户属于哪一个表空间，在system用户下查找：select default_tablespace from dba_users where username=’用户名（必须大写）’查询所有目录，在拥有DBA权限的用户下查：select from dba_directories]]></content>
-      <tags>
-        <tag>Oracle数据库</tag>
       </tags>
   </entry>
 </search>
