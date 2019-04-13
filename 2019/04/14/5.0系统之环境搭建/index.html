@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Oracle数据库,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
-<meta name="keywords" content="Oracle数据库">
+<meta name="description" content="title: 5.0系统环境搭建 tags:[yss之5.0环境搭建]sofa配置文件 在服务器的工作目录新建sofa_home文件夹，从其他环境把配置文件复制过来。其中deploy、TempFileData、logs等文件夹的内容不需要，确保存在这层目录就行了 修改global/datasources.xml数据库配置文件   修改app-servel.xml、localhost-env.in">
 <meta property="og:type" content="article">
-<meta property="og:title" content="oracle操作之数据泵操作">
-<meta property="og:url" content="http://yoursite.com/2019/03/24/数据泵操作/index.html">
+<meta property="og:title" content="BreakPW">
+<meta property="og:url" content="http://yoursite.com/2019/04/14/5.0系统之环境搭建/index.html">
 <meta property="og:site_name" content="BreakPW">
-<meta property="og:description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
+<meta property="og:description" content="title: 5.0系统环境搭建 tags:[yss之5.0环境搭建]sofa配置文件 在服务器的工作目录新建sofa_home文件夹，从其他环境把配置文件复制过来。其中deploy、TempFileData、logs等文件夹的内容不需要，确保存在这层目录就行了 修改global/datasources.xml数据库配置文件   修改app-servel.xml、localhost-env.in">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-24T15:56:53.318Z">
+<meta property="og:updated_time" content="2019-04-13T16:17:53.316Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="oracle操作之数据泵操作">
-<meta name="twitter:description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
+<meta name="twitter:title" content="BreakPW">
+<meta name="twitter:description" content="title: 5.0系统环境搭建 tags:[yss之5.0环境搭建]sofa配置文件 在服务器的工作目录新建sofa_home文件夹，从其他环境把配置文件复制过来。其中deploy、TempFileData、logs等文件夹的内容不需要，确保存在这层目录就行了 修改global/datasources.xml数据库配置文件   修改app-servel.xml、localhost-env.in">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/24/数据泵操作/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/14/5.0系统之环境搭建/">
 
 
 
 
 
-  <title>oracle操作之数据泵操作 | BreakPW</title>
+  <title> | BreakPW</title>
   
 
 
@@ -275,7 +274,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/24/数据泵操作/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/5.0系统之环境搭建/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="龚宇">
@@ -292,7 +291,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">oracle操作之数据泵操作</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -304,8 +303,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T23:56:53+08:00">
-                2019-03-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:29:13+08:00">
+                2019-04-14
               </time>
             
 
@@ -342,51 +341,23 @@
       
 
       
-        <ul>
-<li>创建目录：确保此目录已经授权给用户了</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create directory dump_dir as &apos;/home/oracle/backup&apos;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建临时表空间  </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create temporary tablespace bx_temp </span><br><span class="line">    tempfile &apos;\home\oracle\bx_temp.dbf&apos; </span><br><span class="line">    size 50m autoextend on next 50m maxsize 2048m extent management local</span><br></pre></td></tr></table></figure>
-<p>如果导入时发现临时文件空间不足：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter tablespace bx_temp  </span><br><span class="line">    add tempfile &apos;\home\oracle\bx_temp1.dbf&apos; size 100M autoextend on next 20M maxsize 1024M</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建表空间</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create tablespace bx</span><br><span class="line">	  logging</span><br><span class="line">	  datafile &apos;\home\oracle\bx.dbf&apos;</span><br><span class="line">	  size 50m autoextend on next 50m maxsize 2048m extent management local</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建用户</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create user bxUser identified by bxPassword default tablespace bx  temporary tablespace bx_temp</span><br><span class="line"></span><br><span class="line">drop user userName cascade --删除用户</span><br></pre></td></tr></table></figure>
-<ul>
-<li>授权</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant create session,connect,resource,select any table to bxUser</span><br></pre></td></tr></table></figure>
-<ul>
-<li><ol>
-<li>收回权限：<br>revoke dba from bxUser<br>2.授予用户操作directory的权限<br>grant read,write on directory DUMP_DIR to bxUser</li>
-</ol>
+        <hr>
+<p>title: 5.0系统环境搭建</p>
+<h2 id="tags-yss之5-0环境搭建"><a href="#tags-yss之5-0环境搭建" class="headerlink" title="tags:[yss之5.0环境搭建]"></a>tags:[yss之5.0环境搭建]</h2><h4 id="sofa配置文件"><a href="#sofa配置文件" class="headerlink" title="sofa配置文件"></a>sofa配置文件</h4><ul>
+<li>在服务器的工作目录新建sofa_home文件夹，从其他环境把配置文件复制过来。其中deploy、TempFileData、logs等文件夹的内容不需要，确保存在这层目录就行了</li>
+<li>修改global/datasources.xml数据库配置文件  </li>
+<li>修改app-servel.xml、localhost-env.ini、scheduler.boot文件  <h4 id="was控制台配置"><a href="#was控制台配置" class="headerlink" title="was控制台配置"></a>was控制台配置</h4></li>
+<li>新建服务器  </li>
+<li>进程定义 - 环境条目 - 新建。名称必须为SOFACONFIG_HOME，值为上一步sofa配置文件的绝对路径 </li>
+<li><p>进程定义 - java虚拟机。勾选详细垃圾回收机制，初始堆和最大堆大小都填4096。通用jvm参数输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dfile.encoding=UTF-8 -Dclient.encoding.override=UTF  //平台启动日志出现乱码时可以设置这个</span><br></pre></td></tr></table></figure>
 </li>
-<li>删除表空间</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop tablespace 名字 including contents and datafiles</span><br></pre></td></tr></table></figure>
-<ul>
-<li>数据泵导入</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">impdp 用户名/密码  directory=dump_dir dumpfile=abc.dmp  REMAP_SCHEMA=原用户名:现用户名 </span><br><span class="line">REMAP_TABLESPACE=原表空间名:现表空间名 full=y logfile=abc.log</span><br></pre></td></tr></table></figure>
-<p>注意点一：用impdp 导入，检查 table_statistics 时等待了N长时间<br>解决办法：EXCLUDE=TABLE_STATISTICS 选项将 table_statistics 对象过滤  </p>
-<p>注意点二：ORA-14460: only one COMPRESS or NOCOMPRESS clause may be specified<br>解决办法：导入命令加入 transform=segment_attributes:n  </p>
-<p>注意点三：待补充</p>
-<ul>
-<li>数据泵导出</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expdp 用户名/密码@ip/orcl directory=dump_dir dumpfile=abc.dmp  logfile=abc.log</span><br></pre></td></tr></table></figure>
-<ul>
-<li>常用sql<br>查看用户拥有的角色：select <em> from user_role_privs<br>查看用户所有的权限：select </em> from session_privs<br>查询所有表空间：select <em> from dba_tablespaces<br>查询用户属于哪一个表空间，在system用户下查找：select default_tablespace from dba_users where username=’用户名（必须大写）’<br>查询所有目录，在拥有DBA权限的用户下查：select </em> from dba_directories  <a id="more"></a>
+<li><p>java SDK按照要求选择，本项目组都是选择jdk 1.6  </p>
 </li>
+<li>查看端口WC_defaulthost，加入端口自动设置为9084，查看环境 - 虚拟主机 - defaulthost - 主机别名。看列表中有没有对应的端口，如果没有就要新建，否则服务将无法被访问  <h4 id="war包安装"><a href="#war包安装" class="headerlink" title="war包安装"></a>war包安装</h4></li>
+<li>进入企业应用程序界面，点击安装，按照要求选择相应服务器，填写安装地址，填写上下文根  </li>
 </ul>
+<p>注意，此时启动时后台会报没有fundacc全局数据源的错误，这是因为你没有在datasources.xml配置id为fundacc的数据源，这里公司不建议新增数据源，所以手工把报错的组件的数据源改成acs就行了。</p>
 
       
     </div>
@@ -402,12 +373,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Oracle数据库/" rel="tag"># Oracle数据库</a>
-          
-        </div>
-      
 
       
       
@@ -417,8 +382,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/24/与室友游广州/" rel="next" title="对着珠江喝酒打屁">
-                <i class="fa fa-chevron-left"></i> 对着珠江喝酒打屁
+              <a href="/2019/04/14/linux之正则表达式/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -427,8 +392,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/24/查询表空大小和连接数/" rel="prev" title="数据库空间查看和连接数查看">
-                数据库空间查看和连接数查看 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/14/oracle之误删除数据的恢复方法/" rel="prev" title="oracle之误删除数据的恢复方法">
+                oracle之误删除数据的恢复方法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -481,8 +446,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -499,7 +473,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -512,7 +486,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -535,6 +509,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tags-yss之5-0环境搭建"><span class="nav-number">1.</span> <span class="nav-text">tags:[yss之5.0环境搭建]</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sofa配置文件"><span class="nav-number">1.0.1.</span> <span class="nav-text">sofa配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#was控制台配置"><span class="nav-number">1.0.2.</span> <span class="nav-text">was控制台配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#war包安装"><span class="nav-number">1.0.3.</span> <span class="nav-text">war包安装</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -573,7 +563,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共1.5k字</span>
+  <span class="post-count">博客全站共4.2k字</span>
 </div>
 
 

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Oracle数据库,">
+  <meta name="keywords" content="Oracle,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
-<meta name="keywords" content="Oracle数据库">
+<meta name="description" content="delete误删除的解决方法原理：利用oracle提供的闪回方法，如果在删除数据后还没做大量的操作（只要保证被删除数据的块没被覆写），就可以利用闪回方式直接找回删除的数据    确定删除数据的时间（在删除数据之前的时间就行，不过最好是删除数据的时间点） 用以下语句找出删除的数据：select * from 表名 as of timestamp to_timestamp(‘删除时间点’,’yyyy-">
+<meta name="keywords" content="Oracle">
 <meta property="og:type" content="article">
-<meta property="og:title" content="oracle操作之数据泵操作">
-<meta property="og:url" content="http://yoursite.com/2019/03/25/数据泵操作/index.html">
+<meta property="og:title" content="oracle之误删除数据的恢复方法">
+<meta property="og:url" content="http://yoursite.com/2019/04/14/oracle之误删除数据的恢复方法/index.html">
 <meta property="og:site_name" content="BreakPW">
-<meta property="og:description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
+<meta property="og:description" content="delete误删除的解决方法原理：利用oracle提供的闪回方法，如果在删除数据后还没做大量的操作（只要保证被删除数据的块没被覆写），就可以利用闪回方式直接找回删除的数据    确定删除数据的时间（在删除数据之前的时间就行，不过最好是删除数据的时间点） 用以下语句找出删除的数据：select * from 表名 as of timestamp to_timestamp(‘删除时间点’,’yyyy-">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-24T16:11:56.085Z">
+<meta property="og:updated_time" content="2019-04-13T16:32:36.507Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="oracle操作之数据泵操作">
-<meta name="twitter:description" content="创建目录：确保此目录已经授权给用户了  1create directory dump_dir as &amp;apos;/home/oracle/backup&amp;apos;  创建临时表空间    123create temporary tablespace bx_temp     tempfile &amp;apos;\home\oracle\bx_temp.dbf&amp;apos;     size 50m aut">
+<meta name="twitter:title" content="oracle之误删除数据的恢复方法">
+<meta name="twitter:description" content="delete误删除的解决方法原理：利用oracle提供的闪回方法，如果在删除数据后还没做大量的操作（只要保证被删除数据的块没被覆写），就可以利用闪回方式直接找回删除的数据    确定删除数据的时间（在删除数据之前的时间就行，不过最好是删除数据的时间点） 用以下语句找出删除的数据：select * from 表名 as of timestamp to_timestamp(‘删除时间点’,’yyyy-">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/25/数据泵操作/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/14/oracle之误删除数据的恢复方法/">
 
 
 
 
 
-  <title>oracle操作之数据泵操作 | BreakPW</title>
+  <title>oracle之误删除数据的恢复方法 | BreakPW</title>
   
 
 
@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/数据泵操作/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/oracle之误删除数据的恢复方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="龚宇">
@@ -292,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">oracle操作之数据泵操作</h1>
+          <h1 class="post-title" itemprop="name headline">oracle之误删除数据的恢复方法</h1>
         
 
         <div class="post-meta">
@@ -304,8 +304,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T00:11:56+08:00">
-                2019-03-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:34:26+08:00">
+                2019-04-14
               </time>
             
 
@@ -342,50 +342,44 @@
       
 
       
-        <ul>
-<li>创建目录：确保此目录已经授权给用户了</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create directory dump_dir as &apos;/home/oracle/backup&apos;</span><br></pre></td></tr></table></figure>
+        <h4 id="delete误删除的解决方法"><a href="#delete误删除的解决方法" class="headerlink" title="delete误删除的解决方法"></a>delete误删除的解决方法</h4><p>原理：利用oracle提供的闪回方法，如果在删除数据后还没做大量的操作（<strong>只要保证被删除数据的块没被覆写</strong>），就可以利用闪回方式直接找回删除的数据  </p>
 <ul>
-<li>创建临时表空间  </li>
+<li>确定删除数据的时间（在删除数据之前的时间就行，不过最好是删除数据的时间点）</li>
+<li>用以下语句找出删除的数据：select * from 表名 as of timestamp to_timestamp(‘删除时间点’,’yyyy-mm-dd hh24:mi:ss’)</li>
+<li>把删除的数据重新插入原表：<br>  insert into 表名 (select * from 表名 as of timestamp to_timestamp(‘删除时间点’,’yyyy-mm-dd hh24:mi:ss’));注意要保证主键不重复  </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create temporary tablespace bx_temp </span><br><span class="line">    tempfile &apos;\home\oracle\bx_temp.dbf&apos; </span><br><span class="line">    size 50m autoextend on next 50m maxsize 2048m extent management local</span><br></pre></td></tr></table></figure>
-<p>如果导入时发现临时文件空间不足：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter tablespace bx_temp  </span><br><span class="line">    add tempfile &apos;\home\oracle\bx_temp1.dbf&apos; size 100M autoextend on next 20M maxsize 1024M</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建表空间</li>
+<h5 id="如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。"><a href="#如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。" class="headerlink" title="如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。"></a>如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。</h5><ul>
+<li>alter table 表名 enable row movement  –开启行移动功能   </li>
+<li>flashback table 表名 to timestamp to_timestamp(删除时间点’,’yyyy-mm-dd hh24:mi:ss’)  –恢复表数据  </li>
+<li>alter table 表名 disable row movement   –关闭行移动功能 ( 千万别忘记 )  </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create tablespace bx</span><br><span class="line">	  logging</span><br><span class="line">	  datafile &apos;\home\oracle\bx.dbf&apos;</span><br><span class="line">	  size 50m autoextend on next 50m maxsize 2048m extent management local</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
+<p><strong>注意：表闪回要求用户必须要有flash any table权限</strong>  </p>
+<h4 id="drop误删除的解决方法"><a href="#drop误删除的解决方法" class="headerlink" title="drop误删除的解决方法"></a>drop误删除的解决方法</h4><p>原理：由于oracle在删除表时，没有直接清空表所占的块,oracle把这些已删除的表的信息放到了一个虚拟容器“回收站”中，而只是对该表的数据块做了可以被覆写的标志，所以在块未被重新使用前还可以恢复。  </p>
 <ul>
-<li>创建用户</li>
+<li>查询这个“回收站”或者查询user_table视图来查找已被删除的表:</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create user bxUser identified by bxPassword default tablespace bx  temporary tablespace bx_temp</span><br><span class="line"></span><br><span class="line">drop user userName cascade --删除用户</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select table_name,dropped from user_tables</span><br><span class="line">select object_name,original_name,type,droptime from user_recyclebin</span><br></pre></td></tr></table></figure>
+<p>注意： 在以上信息中，表名都是被重命名过的，字段table_name或者object_name就是删除后在回收站中的存放表名  </p>
 <ul>
-<li>授权</li>
+<li>如果还能记住表名，则可以用下面语句直接恢复：  </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant create session,connect,resource,select any table to bxUser</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flashback table 原表名 to before drop</span><br></pre></td></tr></table></figure>
 <ul>
-<li><ol>
-<li>收回权限：<br>revoke dba from bxUser<br>2.授予用户操作directory的权限<br>grant read,write on directory DUMP_DIR to bxUser</li>
-</ol>
+<li>如果记不住了，也可以直接使用回收站的表名进行恢复，然后再重命名，参照以下语句：  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flashback table &quot;回收站中的表名(如：Bin$DSbdfd4rdfdfdfegdfsf==$0)&quot; to before drop rename to 新表名</span><br></pre></td></tr></table></figure>
+<ul>
+<li>oracle的闪回功能除了以上基本功能外，还可以闪回整个数据库：使用数据库闪回功能，可以使数据库回到过去某一状态, 语法如下：  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt;alter database flashback on</span><br><span class="line">SQL&gt;flashback database to scn SCNNO;</span><br><span class="line">SQL&gt;flashback database to timestamp to_timestamp(&apos;2007-2-12 12:00:00&apos;,&apos;yyyy-mm-dd hh24:mi:ss&apos;);</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>oracle提供以上机制保证了安全操作，但同时也代来了另外一个问题，就是空间占用，由于以上机制的运行，使用drop一个表或者delete数据后，空间不会自动回收，对于一些确定不使用的表，删除时要同时回收空间，可以有以下2种方式：</p>
+<ul>
+<li>采用truncate方式进行截断。（但不能进行数据回恢复了）  </li>
+<li>在drop时加上purge选项：drop table 表名 purge<br>也可以通过删除recyclebin区域来永久性删除表 ,原始删除表drop table emp cascade constraints<br>purge table emp;<ul>
+<li>删除当前用户的回收站:<br>purge recyclebin;  </li>
+<li>删除全体用户在回收站的数据:<br>purge dba_recyclebin</li>
+</ul>
 </li>
-<li>删除表空间</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop tablespace 名字 including contents and datafiles</span><br></pre></td></tr></table></figure>
-<ul>
-<li>数据泵导入</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">impdp 用户名/密码  directory=dump_dir dumpfile=abc.dmp  REMAP_SCHEMA=原用户名:现用户名 </span><br><span class="line">REMAP_TABLESPACE=原表空间名:现表空间名 full=y logfile=abc.log</span><br></pre></td></tr></table></figure>
-<p>注意点一：用impdp 导入，检查 table_statistics 时等待了N长时间<br>解决办法：EXCLUDE=TABLE_STATISTICS 选项将 table_statistics 对象过滤  </p>
-<p>注意点二：ORA-14460: only one COMPRESS or NOCOMPRESS clause may be specified<br>解决办法：导入命令加入 transform=segment_attributes:n  </p>
-<p>注意点三：待补充  </p>
-<ul>
-<li>数据泵导出</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expdp 用户名/密码@ip/orcl directory=dump_dir dumpfile=abc.dmp  logfile=abc.log</span><br></pre></td></tr></table></figure>
-<ul>
-<li>常用sql<br>查看用户拥有的角色：select <em> from user_role_privs<br>查看用户所有的权限：select </em> from session_privs<br>查询所有表空间：select <em> from dba_tablespaces<br>查询用户属于哪一个表空间，在system用户下查找：select default_tablespace from dba_users where username=’用户名（必须大写）’<br>查询所有目录，在拥有DBA权限的用户下查：select </em> from dba_directories  </li>
 </ul>
 
       
@@ -404,7 +398,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Oracle数据库/" rel="tag"># Oracle数据库</a>
+            <a href="/tags/Oracle/" rel="tag"># Oracle</a>
           
         </div>
       
@@ -417,8 +411,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/25/与室友游广州/" rel="next" title="对着珠江喝酒打屁">
-                <i class="fa fa-chevron-left"></i> 对着珠江喝酒打屁
+              <a href="/2019/04/14/5.0系统之环境搭建/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -427,8 +421,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/25/搭建个人免费博客/" rel="prev" title="github和hexo搭建个人免费博客">
-                github和hexo搭建个人免费博客 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/14/oracle之数据泵操作/" rel="prev" title="oracle操作之数据泵操作">
+                oracle操作之数据泵操作 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -481,8 +475,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -499,7 +502,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -512,7 +515,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -535,6 +538,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#delete误删除的解决方法"><span class="nav-number">1.</span> <span class="nav-text">delete误删除的解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。"><span class="nav-number">1.1.</span> <span class="nav-text">如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#drop误删除的解决方法"><span class="nav-number">2.</span> <span class="nav-text">drop误删除的解决方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -573,7 +592,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共1.5k字</span>
+  <span class="post-count">博客全站共4.2k字</span>
 </div>
 
 
