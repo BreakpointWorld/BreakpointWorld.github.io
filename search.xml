@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[linux之生成Javacore文件]]></title>
+    <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8B%E7%94%9F%E6%88%90Javacore%E6%96%87%E4%BB%B6%2F</url>
+    <content type="text"><![CDATA[12ps -ef | grep serverName（服务名） kill -3 服务pid 现在Javacore文件就生成了，目录是/proc/51356(pid)/cwd]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[数据库空间查看和连接数查看]]></title>
+    <url>%2F2019%2F04%2F14%2Foracle%E4%B9%8B%E6%9F%A5%E8%AF%A2%E8%A1%A8%E7%A9%BA%E5%A4%A7%E5%B0%8F%E5%92%8C%E8%BF%9E%E6%8E%A5%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[- 查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100, 2), &apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BYTES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(SUM(BYTES) / (1024 * 1024),2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024),2) MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLESPACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_DATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME ORDER BY 4 DESC - 查看最大连接数12345 SQL&gt; select count(*) from v$session #当前的连接数SQL&gt; Select count(*) from v$session where status=&apos;ACTIVE&apos; #并发连接数SQL&gt; select value from v$parameter where name = &apos;processes&apos; --数据库允许的最大连接数SQL&gt; show parameter processes #最大连接 SQL&gt; select username,count(username) from v$session where username is not null group by username; #查看不同用户的连接数 - 修改最大连接数1alter system set processes = 2000 scope = spfile; - 重启数据库12shutdown immediate;startup; - 监听操作监听查看:lsnrctl status 启动监听:lsnrctl start 停止监听:lsnrctl stop]]></content>
+      <tags>
+        <tag>Oracle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[linux之正则表达式]]></title>
     <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8B%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%2F</url>
     <content type="text"><![CDATA[语系对正则表达式的影响了解下面几个特殊符号代表的意义 [:alnum:] 代表英文大小写字符以及数字 [:alpha:] 代表英文大小写 [:digit:] 代表数字 [:lower:] 代表英文小写 [:upper:] 代表英文大写 [:punct:] 代表标点符号：”、’、?、!、；、#、$等 正则表达式的练习查找特定字符串 1grep -n &apos;the&apos; test.txt //查找含有the的行，n参数代表显示行号，被查找的字符单引号或者双引号括起来，或者不使用单双引号都可以，如果想要反向选择，加上v参数 利用[]来查找集合字符1234grep -n &apos;t[ab]st&apos; text.txt //查找含有tast，tbst字符的行grep -n &apos;[^g]oo&apos; text.txt //查找含有oo，但是oo前面不为g的行grep -n &apos;[0-9]&apos; text.txt //查找有数字的那一行grep -n &apos;[[:digit:]]&apos; text.txt //效果同上，为了避免语系带来的差异，可以使用特殊符号代替 行首与行尾字符^$12345grep -n &apos;^the&apos; test.txt //以the开头的行grep -n &apos;^[a-z]&apos; test.txt //以小写字母开头行grep -n &apos;^[^A-Za-z]&apos; test.txt //不以字母开头的行，这里就需要注意^号在[]里面和外面的含义grep -n &apos;\.$&apos; test.txt //以.号结尾的行，因为.是特殊字符，所以要用\转义grep -n &apos;^$&apos; test.txt //空行 任意字符与重复字符.* .代表一定有一个任意字符 *代表重复前一个字符，0到无穷多次 12345grep -n &apos;g..d&apos; test.txt //查找含有g??d的行，例如hgood,gngd,hgoodk等grep -n &apos;o*&apos; test.txt //所有行都会打印出来，因为o*代表0个字符或者一个o以上的字符grep -n &apos;g.*g&apos; test.txt //.*代表0个或多个任意字符``` ##### 限定连续字符范围&#123;&#125; grep -n ‘o{2}‘ test.txt //显示含有两个o的行grep -n ‘o{2,5}}’ test.txt //显示含有2到5个o的行12345678#### 通配符 * *代表0到无穷多个字符 * ？代表一定有一个任意字符* [ ]代表一定有一个在括号内的任意字符 * [-]代表在编码顺序内的所有字符* [^]代表反向选择 ls -l ./corn //代表显示当前文件夹下文件名为corn开头的文件ls -l ./??? //代表显示当前文件夹下文件名为3个字符的文件ls -l ./[0-9] //代表显示当前文件夹下文件名含有数字的文件，记得加上两个ls -l ./[^a-z]* //代表显示当前文件夹下文件名不以小写字母开头的文件`注意点通配符一般只用于文件名匹配，它是由shell解析的，比如find，ls，cp，mv等。正则表达式是用来匹配字符串的，针对文件内容的文本过滤工具里，大都用到正则表达式，如vi，grep，awk，sed等。]]></content>
@@ -25,11 +41,6 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8B%E7%94%9F%E6%88%90Javacore%E6%96%87%E4%BB%B6%2F</url>
-    <content type="text"><![CDATA[title: linux之生成Javacore文件 tags: [Linux]12ps -ef | grep serverName（服务名） kill -3 服务pid 现在Javacore文件就生成了，目录是/proc/51356(pid)/cwd]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[linux之管道命令]]></title>
     <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8B%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%2F</url>
     <content type="text"><![CDATA[注意点1：管道命令只会处理标准输出（stdout），忽略标准错误（stderr） 注意点2：管道命令必须能够接受前一个命令的数据作为标准输入继续处理（像grep等命令）。选取命令cut -d 后面接分割字符，与-f一起使用 -f 根据-d的分割字符将信息分段，-f后面接的数字代表取出第几段 -c 以字符的单位取出固定字符区间 例一：取出path路径的第三和第五个路径 1echo &#123;path&#125; | cut -d &apos;:&apos; -f 3,5 例二：将export输出的信息，取的第十二个字符之后的所有字符 1export | cut -c 12- //(如果是取第十二个字符之前，就是“-11”，如果是去区间，就是“10-20”) grep -c 计算查找到字符的次数 -i 忽略大小写 -n 输出行号 -v 反向选择，输出没有‘查找字符’的那一行 例一：last输出信息，只要有root就取出，并且只取出第一栏 1last | grep &apos;root&apos; | cut -d &apos; &apos; -f 1 排序命令sort -f 忽略大小写差异 -b 忽略最前面空格字符部分 -r 反向排序 -u 相同数据，仅显示一行 -t 分隔符号，默认是用[tab]键进行分隔 -k 以哪个区间进行排序 例一：对系统的所有账号进行排序 1cat /etc/passwd | sort uniq例一：last登录信息，获得每个账号的登录总次数 1last | cut -d &apos; &apos; -f 1 | sort | uniq -c //注意要加sort wc -l 仅列出行 -w 仅列出字 -m 多少字符 双向重定向tee(同时将数据流分送到屏幕和文件) -a 以累加的形式，将数据加到文件 1last | tee last.list | cut -d &apos; &apos; 划分命令split -b 后面接划分文件的大小，比如说b、k、m等 -l 以行数进行划分 例一：把/etc/services分成20k大小的文件 1split -b 20k /etc/services //生成servicesaa、servicesab、servicesac...]]></content>
@@ -51,14 +62,6 @@
     <content type="text"><![CDATA[]]></content>
       <tags>
         <tag>生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[数据库空间查看和连接数查看]]></title>
-    <url>%2F2019%2F04%2F14%2Foracle%E4%B9%8B%E6%9F%A5%E8%AF%A2%E8%A1%A8%E7%A9%BA%E5%A4%A7%E5%B0%8F%E5%92%8C%E8%BF%9E%E6%8E%A5%E6%95%B0%2F</url>
-    <content type="text"><![CDATA[- 查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100, 2), &apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BYTES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(SUM(BYTES) / (1024 * 1024),2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024),2) MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLESPACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_DATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME ORDER BY 4 DESC - 查看最大连接数12345 SQL&gt; select count(*) from v$session #当前的连接数SQL&gt; Select count(*) from v$session where status=&apos;ACTIVE&apos; #并发连接数SQL&gt; select value from v$parameter where name = &apos;processes&apos; --数据库允许的最大连接数SQL&gt; show parameter processes #最大连接 SQL&gt; select username,count(username) from v$session where username is not null group by username; #查看不同用户的连接数 - 修改最大连接数1alter system set processes = 2000 scope = spfile; - 重启数据库12shutdown immediate;startup; - 监听操作监听查看:lsnrctl status 启动监听:lsnrctl start 停止监听:lsnrctl stop]]></content>
-      <tags>
-        <tag>Oracle数据库</tag>
       </tags>
   </entry>
   <entry>
