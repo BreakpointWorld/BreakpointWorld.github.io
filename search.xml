@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
+    <title><![CDATA[linux之正则表达式]]></title>
     <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8B%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%2F</url>
-    <content type="text"><![CDATA[title: linux之正则表达式 tags: [Linux]语系对正则表达式的影响了解下面几个特殊符号代表的意义 [:alnum:] 代表英文大小写字符以及数字 [:alpha:] 代表英文大小写 [:digit:] 代表数字 [:lower:] 代表英文小写 [:upper:] 代表英文大写 [:punct:] 代表标点符号：”、’、?、!、；、#、$等 正则表达式的练习查找特定字符串 1grep -n &apos;the&apos; test.txt //查找含有the的行，n参数代表显示行号，被查找的字符单引号或者双引号括起来，或者不使用单双引号都可以，如果想要反向选择，加上v参数 利用[]来查找集合字符1234grep -n &apos;t[ab]st&apos; text.txt //查找含有tast，tbst字符的行grep -n &apos;[^g]oo&apos; text.txt //查找含有oo，但是oo前面不为g的行grep -n &apos;[0-9]&apos; text.txt //查找有数字的那一行grep -n &apos;[[:digit:]]&apos; text.txt //效果同上，为了避免语系带来的差异，可以使用特殊符号代替 行首与行尾字符^$12345grep -n &apos;^the&apos; test.txt //以the开头的行grep -n &apos;^[a-z]&apos; test.txt //以小写字母开头行grep -n &apos;^[^A-Za-z]&apos; test.txt //不以字母开头的行，这里就需要注意^号在[]里面和外面的含义grep -n &apos;\.$&apos; test.txt //以.号结尾的行，因为.是特殊字符，所以要用\转义grep -n &apos;^$&apos; test.txt //空行 任意字符与重复字符.* .代表一定有一个任意字符 *代表重复前一个字符，0到无穷多次 12345grep -n &apos;g..d&apos; test.txt //查找含有g??d的行，例如hgood,gngd,hgoodk等grep -n &apos;o*&apos; test.txt //所有行都会打印出来，因为o*代表0个字符或者一个o以上的字符grep -n &apos;g.*g&apos; test.txt //.*代表0个或多个任意字符``` ##### 限定连续字符范围&#123;&#125; grep -n ‘o{2}‘ test.txt //显示含有两个o的行grep -n ‘o{2,5}}’ test.txt //显示含有2到5个o的行12345678#### 通配符 * *代表0到无穷多个字符 * ？代表一定有一个任意字符* [ ]代表一定有一个在括号内的任意字符 * [-]代表在编码顺序内的所有字符* [^]代表反向选择 ls -l ./corn //代表显示当前文件夹下文件名为corn开头的文件ls -l ./??? //代表显示当前文件夹下文件名为3个字符的文件ls -l ./[0-9] //代表显示当前文件夹下文件名含有数字的文件，记得加上两个ls -l ./[^a-z]* //代表显示当前文件夹下文件名不以小写字母开头的文件`注意点通配符一般只用于文件名匹配，它是由shell解析的，比如find，ls，cp，mv等。正则表达式是用来匹配字符串的，针对文件内容的文本过滤工具里，大都用到正则表达式，如vi，grep，awk，sed等。]]></content>
+    <content type="text"><![CDATA[语系对正则表达式的影响了解下面几个特殊符号代表的意义 [:alnum:] 代表英文大小写字符以及数字 [:alpha:] 代表英文大小写 [:digit:] 代表数字 [:lower:] 代表英文小写 [:upper:] 代表英文大写 [:punct:] 代表标点符号：”、’、?、!、；、#、$等 正则表达式的练习查找特定字符串 1grep -n &apos;the&apos; test.txt //查找含有the的行，n参数代表显示行号，被查找的字符单引号或者双引号括起来，或者不使用单双引号都可以，如果想要反向选择，加上v参数 利用[]来查找集合字符1234grep -n &apos;t[ab]st&apos; text.txt //查找含有tast，tbst字符的行grep -n &apos;[^g]oo&apos; text.txt //查找含有oo，但是oo前面不为g的行grep -n &apos;[0-9]&apos; text.txt //查找有数字的那一行grep -n &apos;[[:digit:]]&apos; text.txt //效果同上，为了避免语系带来的差异，可以使用特殊符号代替 行首与行尾字符^$12345grep -n &apos;^the&apos; test.txt //以the开头的行grep -n &apos;^[a-z]&apos; test.txt //以小写字母开头行grep -n &apos;^[^A-Za-z]&apos; test.txt //不以字母开头的行，这里就需要注意^号在[]里面和外面的含义grep -n &apos;\.$&apos; test.txt //以.号结尾的行，因为.是特殊字符，所以要用\转义grep -n &apos;^$&apos; test.txt //空行 任意字符与重复字符.* .代表一定有一个任意字符 *代表重复前一个字符，0到无穷多次 12345grep -n &apos;g..d&apos; test.txt //查找含有g??d的行，例如hgood,gngd,hgoodk等grep -n &apos;o*&apos; test.txt //所有行都会打印出来，因为o*代表0个字符或者一个o以上的字符grep -n &apos;g.*g&apos; test.txt //.*代表0个或多个任意字符``` ##### 限定连续字符范围&#123;&#125; grep -n ‘o{2}‘ test.txt //显示含有两个o的行grep -n ‘o{2,5}}’ test.txt //显示含有2到5个o的行12345678#### 通配符 * *代表0到无穷多个字符 * ？代表一定有一个任意字符* [ ]代表一定有一个在括号内的任意字符 * [-]代表在编码顺序内的所有字符* [^]代表反向选择 ls -l ./corn //代表显示当前文件夹下文件名为corn开头的文件ls -l ./??? //代表显示当前文件夹下文件名为3个字符的文件ls -l ./[0-9] //代表显示当前文件夹下文件名含有数字的文件，记得加上两个ls -l ./[^a-z]* //代表显示当前文件夹下文件名不以小写字母开头的文件`注意点通配符一般只用于文件名匹配，它是由shell解析的，比如find，ls，cp，mv等。正则表达式是用来匹配字符串的，针对文件内容的文本过滤工具里，大都用到正则表达式，如vi，grep，awk，sed等。]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[5.0系统环境搭建]]></title>
+    <url>%2F2019%2F04%2F14%2F5.0%E7%B3%BB%E7%BB%9F%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%2F</url>
+    <content type="text"><![CDATA[sofa配置文件 在服务器的工作目录新建sofa_home文件夹，从其他环境把配置文件复制过来。其中deploy、TempFileData、logs等文件夹的内容不需要，确保存在这层目录就行了 修改global/datasources.xml数据库配置文件 修改app-servel.xml、localhost-env.ini、scheduler.boot文件 was控制台配置 新建服务器 进程定义 - 环境条目 - 新建。名称必须为SOFACONFIG_HOME，值为上一步sofa配置文件的绝对路径 进程定义 - java虚拟机。勾选详细垃圾回收机制，初始堆和最大堆大小都填4096。通用jvm参数输入 1-Dfile.encoding=UTF-8 -Dclient.encoding.override=UTF //平台启动日志出现乱码时可以设置这个 java SDK按照要求选择，本项目组都是选择jdk 1.6 查看端口WC_defaulthost，加入端口自动设置为9084，查看环境 - 虚拟主机 - defaulthost - 主机别名。看列表中有没有对应的端口，如果没有就要新建，否则服务将无法被访问 war包安装 进入企业应用程序界面，点击安装，按照要求选择相应服务器，填写安装地址，填写上下文根 注意，此时启动时后台会报没有fundacc全局数据源的错误，这是因为你没有在datasources.xml配置id为fundacc的数据源，这里公司不建议新增数据源，所以手工把报错的组件的数据源改成acs就行了。]]></content>
+      <tags>
+        <tag>yss之5.0环境搭建</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[linux之数据流重定向]]></title>
@@ -33,11 +44,6 @@
       <tags>
         <tag>linux</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>%2F2019%2F04%2F14%2F5.0%E7%B3%BB%E7%BB%9F%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%2F</url>
-    <content type="text"><![CDATA[title: 5.0系统环境搭建 tags: [yss之5.0环境搭建]sofa配置文件 在服务器的工作目录新建sofa_home文件夹，从其他环境把配置文件复制过来。其中deploy、TempFileData、logs等文件夹的内容不需要，确保存在这层目录就行了 修改global/datasources.xml数据库配置文件 修改app-servel.xml、localhost-env.ini、scheduler.boot文件 was控制台配置 新建服务器 进程定义 - 环境条目 - 新建。名称必须为SOFACONFIG_HOME，值为上一步sofa配置文件的绝对路径 进程定义 - java虚拟机。勾选详细垃圾回收机制，初始堆和最大堆大小都填4096。通用jvm参数输入 1-Dfile.encoding=UTF-8 -Dclient.encoding.override=UTF //平台启动日志出现乱码时可以设置这个 java SDK按照要求选择，本项目组都是选择jdk 1.6 查看端口WC_defaulthost，加入端口自动设置为9084，查看环境 - 虚拟主机 - defaulthost - 主机别名。看列表中有没有对应的端口，如果没有就要新建，否则服务将无法被访问 war包安装 进入企业应用程序界面，点击安装，按照要求选择相应服务器，填写安装地址，填写上下文根 注意，此时启动时后台会报没有fundacc全局数据源的错误，这是因为你没有在datasources.xml配置id为fundacc的数据源，这里公司不建议新增数据源，所以手工把报错的组件的数据源改成acs就行了。]]></content>
   </entry>
   <entry>
     <title><![CDATA[大海呀]]></title>
