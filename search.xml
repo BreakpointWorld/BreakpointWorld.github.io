@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title></title>
+    <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8B%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[title: linux之正则表达式 tags: [Linux]语系对正则表达式的影响了解下面几个特殊符号代表的意义 [:alnum:] 代表英文大小写字符以及数字 [:alpha:] 代表英文大小写 [:digit:] 代表数字 [:lower:] 代表英文小写 [:upper:] 代表英文大写 [:punct:] 代表标点符号：”、’、?、!、；、#、$等 正则表达式的练习查找特定字符串 1grep -n &apos;the&apos; test.txt //查找含有the的行，n参数代表显示行号，被查找的字符单引号或者双引号括起来，或者不使用单双引号都可以，如果想要反向选择，加上v参数 利用[]来查找集合字符1234grep -n &apos;t[ab]st&apos; text.txt //查找含有tast，tbst字符的行grep -n &apos;[^g]oo&apos; text.txt //查找含有oo，但是oo前面不为g的行grep -n &apos;[0-9]&apos; text.txt //查找有数字的那一行grep -n &apos;[[:digit:]]&apos; text.txt //效果同上，为了避免语系带来的差异，可以使用特殊符号代替 行首与行尾字符^$12345grep -n &apos;^the&apos; test.txt //以the开头的行grep -n &apos;^[a-z]&apos; test.txt //以小写字母开头行grep -n &apos;^[^A-Za-z]&apos; test.txt //不以字母开头的行，这里就需要注意^号在[]里面和外面的含义grep -n &apos;\.$&apos; test.txt //以.号结尾的行，因为.是特殊字符，所以要用\转义grep -n &apos;^$&apos; test.txt //空行 任意字符与重复字符.* .代表一定有一个任意字符 *代表重复前一个字符，0到无穷多次 12345grep -n &apos;g..d&apos; test.txt //查找含有g??d的行，例如hgood,gngd,hgoodk等grep -n &apos;o*&apos; test.txt //所有行都会打印出来，因为o*代表0个字符或者一个o以上的字符grep -n &apos;g.*g&apos; test.txt //.*代表0个或多个任意字符``` ##### 限定连续字符范围&#123;&#125; grep -n ‘o{2}‘ test.txt //显示含有两个o的行grep -n ‘o{2,5}}’ test.txt //显示含有2到5个o的行12345678#### 通配符 * *代表0到无穷多个字符 * ？代表一定有一个任意字符* [ ]代表一定有一个在括号内的任意字符 * [-]代表在编码顺序内的所有字符* [^]代表反向选择 ls -l ./corn //代表显示当前文件夹下文件名为corn开头的文件ls -l ./??? //代表显示当前文件夹下文件名为3个字符的文件ls -l ./[0-9] //代表显示当前文件夹下文件名含有数字的文件，记得加上两个ls -l ./[^a-z]* //代表显示当前文件夹下文件名不以小写字母开头的文件`注意点通配符一般只用于文件名匹配，它是由shell解析的，比如find，ls，cp，mv等。正则表达式是用来匹配字符串的，针对文件内容的文本过滤工具里，大都用到正则表达式，如vi，grep，awk，sed等。]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[linux之数据流重定向]]></title>
+    <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8B%E6%95%B0%E6%8D%AE%E6%B5%81%E9%87%8D%E5%AE%9A%E5%90%91%2F</url>
+    <content type="text"><![CDATA[数据流重定向 定义：命令执行后，将应该显示在屏幕的数据传到其他地方，例如文件或者打印机 分类标准输出：命令执行后返回的正确信息标准错误输出：命令执行后返回的错误信息 使用1&gt;或者&gt;：以覆盖的形式将正确的数据(标准输出)输出到文件1&gt;&gt;或者&gt;&gt;：以累加的形式将正确的数据(标准输出)输出到文件2&gt;：以覆盖的形式将错误的数据(标准错误输出)输出到文件2&gt;&gt;：以累加的形式将错误的数据(标准错误输出)输出到文件注意：如果输出的目标文件不存在，会自动创建 例一：将包含正确数据和错误数据的显示信息分别输出到不同的文件中答：find /home -name .bashrc &gt; list_right 2&gt;list_error 例二：将包含正确数据和错误数据的显示信息分别输出同一文件中答：find /home -name .bashrc &gt; list 2&gt;&amp;1 或者 find /home -name .bashrc &amp;&gt; list 例三：/dev/null垃圾黑洞用法答：find /home -name .bashrc 2&gt; /dev/null; –把错误信息扔进垃圾黑洞不显示命令执行的判断根据 不考虑命令的相关性的连续命令执行格式：cmd;cmd –前一个命令执行完立刻执行后一个命令 命令间有依耐性的命令执行cmd1 &amp;&amp; cmd2 | cmd1执行完毕且正确执行（$?=0），开始执行cmd2。如果执行错误，不执行cmd2cmd1 || cmd2 | cmd1执行完毕且错误执行（$?=0），开始执行cmd2。如果执行正确，不执行cmd2注意：这种方法能够实现的前提是在linux下，如果一个命令的执行结果为正确，就会返回一个$?=0的值 例一：不管/tmp/abc是否存在，都要创建/tmp/abc/text文件答：ls /tmp/abc || mkdir /tmp/abc &amp;&amp; touch /tmp/abc/text分两种情况讨论：一：/tmp/abc存在，这样的话”ls /tmp/abc”就会正常执行，返回$?=0,由于后面跟的是||，所以不会执行后面的命令“mkdir /tmp/abc”，命令会接着往后执行，碰到&amp;&amp;命令，正常执行“touch /tmp/abc/text ”二：tmp/abc不存在，不讨论]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8B%E7%94%9F%E6%88%90Javacore%E6%96%87%E4%BB%B6%2F</url>
+    <content type="text"><![CDATA[title: linux之生成Javacore文件 tags: [Linux]12ps -ef | grep serverName（服务名） kill -3 服务pid 现在Javacore文件就生成了，目录是/proc/51356(pid)/cwd]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[linux之管道命令]]></title>
+    <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8B%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[注意点1：管道命令只会处理标准输出（stdout），忽略标准错误（stderr） 注意点2：管道命令必须能够接受前一个命令的数据作为标准输入继续处理（像grep等命令）。选取命令cut -d 后面接分割字符，与-f一起使用 -f 根据-d的分割字符将信息分段，-f后面接的数字代表取出第几段 -c 以字符的单位取出固定字符区间 例一：取出path路径的第三和第五个路径 1echo &#123;path&#125; | cut -d &apos;:&apos; -f 3,5 例二：将export输出的信息，取的第十二个字符之后的所有字符 1export | cut -c 12- //(如果是取第十二个字符之前，就是“-11”，如果是去区间，就是“10-20”) grep -c 计算查找到字符的次数 -i 忽略大小写 -n 输出行号 -v 反向选择，输出没有‘查找字符’的那一行 例一：last输出信息，只要有root就取出，并且只取出第一栏 1last | grep &apos;root&apos; | cut -d &apos; &apos; -f 1 排序命令sort -f 忽略大小写差异 -b 忽略最前面空格字符部分 -r 反向排序 -u 相同数据，仅显示一行 -t 分隔符号，默认是用[tab]键进行分隔 -k 以哪个区间进行排序 例一：对系统的所有账号进行排序 1cat /etc/passwd | sort uniq例一：last登录信息，获得每个账号的登录总次数 1last | cut -d &apos; &apos; -f 1 | sort | uniq -c //注意要加sort wc -l 仅列出行 -w 仅列出字 -m 多少字符 双向重定向tee(同时将数据流分送到屏幕和文件) -a 以累加的形式，将数据加到文件 1last | tee last.list | cut -d &apos; &apos; 划分命令split -b 后面接划分文件的大小，比如说b、k、m等 -l 以行数进行划分 例一：把/etc/services分成20k大小的文件 1split -b 20k /etc/services //生成servicesaa、servicesab、servicesac...]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[linux之SHELL中的exit 0 和 exit 1的区别]]></title>
+    <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8BSHELL%E4%B8%AD%E7%9A%84exit%200%20%E5%92%8C%20exit%201%E7%9A%84%E5%8C%BA%E5%88%AB%2F</url>
+    <content type="text"><![CDATA[当你 exit 0 的时候,在调用环境 echo $? 就返回0，也就是说调用环境就认为你的这个程序执行正确 当你 exit 1 的时候,一般是出错定义这个1，也可以是其他数字，很多系统程序这个错误编号是有约定的含义的。 但不为0就表示程序运行出错。调用环境就可以根据这个返回值判断你这个程序运行是否ok。 例：如果你用 脚本 a 调用 脚本b ，要在a中判断b是否正常返回，就是根据 exit 0 or 1 来识别。执行完b后， 判断 $? 就是返回值]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>%2F2019%2F04%2F14%2F5.0%E7%B3%BB%E7%BB%9F%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%2F</url>
+    <content type="text"><![CDATA[title: 5.0系统环境搭建 tags: [yss之5.0环境搭建]sofa配置文件 在服务器的工作目录新建sofa_home文件夹，从其他环境把配置文件复制过来。其中deploy、TempFileData、logs等文件夹的内容不需要，确保存在这层目录就行了 修改global/datasources.xml数据库配置文件 修改app-servel.xml、localhost-env.ini、scheduler.boot文件 was控制台配置 新建服务器 进程定义 - 环境条目 - 新建。名称必须为SOFACONFIG_HOME，值为上一步sofa配置文件的绝对路径 进程定义 - java虚拟机。勾选详细垃圾回收机制，初始堆和最大堆大小都填4096。通用jvm参数输入 1-Dfile.encoding=UTF-8 -Dclient.encoding.override=UTF //平台启动日志出现乱码时可以设置这个 java SDK按照要求选择，本项目组都是选择jdk 1.6 查看端口WC_defaulthost，加入端口自动设置为9084，查看环境 - 虚拟主机 - defaulthost - 主机别名。看列表中有没有对应的端口，如果没有就要新建，否则服务将无法被访问 war包安装 进入企业应用程序界面，点击安装，按照要求选择相应服务器，填写安装地址，填写上下文根 注意，此时启动时后台会报没有fundacc全局数据源的错误，这是因为你没有在datasources.xml配置id为fundacc的数据源，这里公司不建议新增数据源，所以手工把报错的组件的数据源改成acs就行了。]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[大海呀]]></title>
     <url>%2F2019%2F04%2F14%2F%E6%83%A0%E5%B7%9E%E6%B8%B8%2F</url>
     <content type="text"><![CDATA[]]></content>
@@ -39,21 +78,6 @@
       <tags>
         <tag>Oracle</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>%2F2019%2F04%2F14%2F5.0%E7%B3%BB%E7%BB%9F%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%2F</url>
-    <content type="text"><![CDATA[title: 5.0系统环境搭建 tags:[yss之5.0环境搭建]sofa配置文件 在服务器的工作目录新建sofa_home文件夹，从其他环境把配置文件复制过来。其中deploy、TempFileData、logs等文件夹的内容不需要，确保存在这层目录就行了 修改global/datasources.xml数据库配置文件 修改app-servel.xml、localhost-env.ini、scheduler.boot文件 was控制台配置 新建服务器 进程定义 - 环境条目 - 新建。名称必须为SOFACONFIG_HOME，值为上一步sofa配置文件的绝对路径 进程定义 - java虚拟机。勾选详细垃圾回收机制，初始堆和最大堆大小都填4096。通用jvm参数输入 1-Dfile.encoding=UTF-8 -Dclient.encoding.override=UTF //平台启动日志出现乱码时可以设置这个 java SDK按照要求选择，本项目组都是选择jdk 1.6 查看端口WC_defaulthost，加入端口自动设置为9084，查看环境 - 虚拟主机 - defaulthost - 主机别名。看列表中有没有对应的端口，如果没有就要新建，否则服务将无法被访问 war包安装 进入企业应用程序界面，点击安装，按照要求选择相应服务器，填写安装地址，填写上下文根 注意，此时启动时后台会报没有fundacc全局数据源的错误，这是因为你没有在datasources.xml配置id为fundacc的数据源，这里公司不建议新增数据源，所以手工把报错的组件的数据源改成acs就行了。]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8B%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%2F</url>
-    <content type="text"><![CDATA[title: linux之正则表达式 tags:[Linux]语系对正则表达式的影响了解下面几个特殊符号代表的意义 [:alnum:] 代表英文大小写字符以及数字 [:alpha:] 代表英文大小写 [:digit:] 代表数字 [:lower:] 代表英文小写 [:upper:] 代表英文大写 [:punct:] 代表标点符号：”、’、?、!、；、#、$等 正则表达式的练习查找特定字符串 1grep -n &apos;the&apos; test.txt //查找含有the的行，n参数代表显示行号，被查找的字符单引号或者双引号括起来，或者不使用单双引号都可以，如果想要反向选择，加上v参数 利用[]来查找集合字符1234grep -n &apos;t[ab]st&apos; text.txt //查找含有tast，tbst字符的行grep -n &apos;[^g]oo&apos; text.txt //查找含有oo，但是oo前面不为g的行grep -n &apos;[0-9]&apos; text.txt //查找有数字的那一行grep -n &apos;[[:digit:]]&apos; text.txt //效果同上，为了避免语系带来的差异，可以使用特殊符号代替 行首与行尾字符^$12345grep -n &apos;^the&apos; test.txt //以the开头的行grep -n &apos;^[a-z]&apos; test.txt //以小写字母开头行grep -n &apos;^[^A-Za-z]&apos; test.txt //不以字母开头的行，这里就需要注意^号在[]里面和外面的含义grep -n &apos;\.$&apos; test.txt //以.号结尾的行，因为.是特殊字符，所以要用\转义grep -n &apos;^$&apos; test.txt //空行 任意字符与重复字符.* .代表一定有一个任意字符 *代表重复前一个字符，0到无穷多次 12345grep -n &apos;g..d&apos; test.txt //查找含有g??d的行，例如hgood,gngd,hgoodk等grep -n &apos;o*&apos; test.txt //所有行都会打印出来，因为o*代表0个字符或者一个o以上的字符grep -n &apos;g.*g&apos; test.txt //.*代表0个或多个任意字符``` ##### 限定连续字符范围&#123;&#125; grep -n ‘o{2}‘ test.txt //显示含有两个o的行grep -n ‘o{2,5}}’ test.txt //显示含有2到5个o的行12345678#### 通配符 * *代表0到无穷多个字符 * ？代表一定有一个任意字符* [ ]代表一定有一个在括号内的任意字符 * [-]代表在编码顺序内的所有字符* [^]代表反向选择 ls -l ./corn //代表显示当前文件夹下文件名为corn开头的文件ls -l ./??? //代表显示当前文件夹下文件名为3个字符的文件ls -l ./[0-9] //代表显示当前文件夹下文件名含有数字的文件，记得加上两个ls -l ./[^a-z]* //代表显示当前文件夹下文件名不以小写字母开头的文件`注意点通配符一般只用于文件名匹配，它是由shell解析的，比如find，ls，cp，mv等。正则表达式是用来匹配字符串的，针对文件内容的文本过滤工具里，大都用到正则表达式，如vi，grep，awk，sed等。]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>%2F2019%2F04%2F14%2Flinux%E4%B9%8B%E7%94%9F%E6%88%90Javacore%E6%96%87%E4%BB%B6%2F</url>
-    <content type="text"><![CDATA[title: linux之生成Javacore文件 tags:[Linux]12ps -ef | grep serverName（服务名） kill -3 服务pid 现在Javacore文件就生成了，目录是/proc/51356(pid)/cwd]]></content>
   </entry>
   <entry>
     <title><![CDATA[github和hexo搭建个人免费博客]]></title>

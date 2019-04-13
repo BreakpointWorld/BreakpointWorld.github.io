@@ -274,6 +274,826 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/linux之正则表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/14/linux之正则表达式/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:43:05+08:00">
+                2019-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<p>title: linux之正则表达式</p>
+<h2 id="tags-Linux"><a href="#tags-Linux" class="headerlink" title="tags: [Linux]"></a>tags: [Linux]</h2><h4 id="语系对正则表达式的影响"><a href="#语系对正则表达式的影响" class="headerlink" title="语系对正则表达式的影响"></a>语系对正则表达式的影响</h4><p>了解下面几个特殊符号代表的意义  </p>
+<ul>
+<li>[:alnum:]  代表英文大小写字符以及数字</li>
+<li>[:alpha:]  代表英文大小写</li>
+<li>[:digit:]  代表数字</li>
+<li>[:lower:]  代表英文小写</li>
+<li>[:upper:]  代表英文大写</li>
+<li>[:punct:]  代表标点符号：”、’、?、!、；、#、$等  <h4 id="正则表达式的练习"><a href="#正则表达式的练习" class="headerlink" title="正则表达式的练习"></a>正则表达式的练习</h4><h5 id="查找特定字符串"><a href="#查找特定字符串" class="headerlink" title="查找特定字符串"></a>查找特定字符串</h5></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -n &apos;the&apos; test.txt //查找含有the的行，n参数代表显示行号，被查找的字符单引号或者双引号括起来，或者不使用单双引号都可以，如果想要反向选择，加上v参数</span><br></pre></td></tr></table></figure>
+<h5 id="利用-来查找集合字符"><a href="#利用-来查找集合字符" class="headerlink" title="利用[]来查找集合字符"></a>利用[]来查找集合字符</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">grep -n &apos;t[ab]st&apos; text.txt //查找含有tast，tbst字符的行</span><br><span class="line">grep -n &apos;[^g]oo&apos; text.txt //查找含有oo，但是oo前面不为g的行</span><br><span class="line">grep -n &apos;[0-9]&apos; text.txt //查找有数字的那一行</span><br><span class="line">grep -n &apos;[[:digit:]]&apos; text.txt //效果同上，为了避免语系带来的差异，可以使用特殊符号代替</span><br></pre></td></tr></table></figure>
+<h5 id="行首与行尾字符"><a href="#行首与行尾字符" class="headerlink" title="行首与行尾字符^$"></a>行首与行尾字符^$</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grep -n &apos;^the&apos; test.txt //以the开头的行</span><br><span class="line">grep -n &apos;^[a-z]&apos; test.txt //以小写字母开头行</span><br><span class="line">grep -n &apos;^[^A-Za-z]&apos; test.txt //不以字母开头的行，这里就需要注意^号在[]里面和外面的含义</span><br><span class="line">grep -n &apos;\.$&apos; test.txt //以.号结尾的行，因为.是特殊字符，所以要用\转义</span><br><span class="line">grep -n &apos;^$&apos; test.txt //空行</span><br></pre></td></tr></table></figure>
+<h5 id="任意字符与重复字符"><a href="#任意字符与重复字符" class="headerlink" title="任意字符与重复字符.*"></a>任意字符与重复字符.*</h5><ul>
+<li>.代表一定有一个任意字符  </li>
+<li>*代表重复前一个字符，0到无穷多次  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grep -n &apos;g..d&apos; test.txt //查找含有g??d的行，例如hgood,gngd,hgoodk等</span><br><span class="line">grep -n &apos;o*&apos; test.txt //所有行都会打印出来，因为o*代表0个字符或者一个o以上的字符</span><br><span class="line">grep -n &apos;g.*g&apos; test.txt //.*代表0个或多个任意字符</span><br><span class="line">```  </span><br><span class="line">#####  限定连续字符范围&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>grep -n ‘o{2}‘ test.txt //显示含有两个o的行<br>grep -n ‘o{2,5}}’ test.txt //显示含有2到5个o的行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">####  通配符  </span><br><span class="line">*  *代表0到无穷多个字符  </span><br><span class="line">*  ？代表一定有一个任意字符</span><br><span class="line">*  [ ]代表一定有一个在括号内的任意字符  </span><br><span class="line">*  [-]代表在编码顺序内的所有字符</span><br><span class="line">*  [^]代表反向选择</span><br></pre></td></tr></table></figure></p>
+<p>ls -l ./corn<em> //代表显示当前文件夹下文件名为corn开头的文件<br>ls -l ./??? //代表显示当前文件夹下文件名为3个字符的文件<br>ls -l ./</em>[0-9]<em> //代表显示当前文件夹下文件名含有数字的文件，记得加上两个</em><br>ls -l ./[^a-z]* //代表显示当前文件夹下文件名不以小写字母开头的文件<br><code>`</code><br>注意点<br><strong>通配符一般只用于文件名匹配，它是由shell解析的，比如find，ls，cp，mv等。</strong><br><strong>正则表达式是用来匹配字符串的，针对文件内容的文本过滤工具里，大都用到正则表达式，如vi，grep，awk，sed等。</strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/linux之数据流重定向/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/14/linux之数据流重定向/" itemprop="url">linux之数据流重定向</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:42:39+08:00">
+                2019-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="数据流重定向"><a href="#数据流重定向" class="headerlink" title="数据流重定向"></a>数据流重定向</h4><ul>
+<li>定义：命令执行后，将应该显示在屏幕的数据传到其他地方，例如文件或者打印机  </li>
+<li>分类<br>标准输出：命令执行后返回的正确信息<br>标准错误输出：命令执行后返回的错误信息</li>
+<li>使用<br>1&gt;或者&gt;：以覆盖的形式将正确的数据(标准输出)输出到文件<br>1&gt;&gt;或者&gt;&gt;：以累加的形式将正确的数据(标准输出)输出到文件<br>2&gt;：以覆盖的形式将错误的数据(标准错误输出)输出到文件<br>2&gt;&gt;：以累加的形式将错误的数据(标准错误输出)输出到文件<br><strong>注意：如果输出的目标文件不存在，会自动创建</strong>  </li>
+</ul>
+<ol>
+<li>例一：将包含正确数据和错误数据的显示信息分别输出到不同的文件中<br>答：find /home -name .bashrc &gt; list_right 2&gt;list_error </li>
+<li>例二：将包含正确数据和错误数据的显示信息分别输出同一文件中<br>答：find /home -name .bashrc &gt; list 2&gt;&amp;1 或者 find /home -name .bashrc &amp;&gt; list</li>
+<li>例三：/dev/null垃圾黑洞用法<br>答：find /home -name .bashrc 2&gt; /dev/null; –把错误信息扔进垃圾黑洞不显示<h4 id="命令执行的判断根据"><a href="#命令执行的判断根据" class="headerlink" title="命令执行的判断根据"></a>命令执行的判断根据</h4></li>
+<li>不考虑命令的相关性的连续命令执行<br>格式：cmd;cmd  –前一个命令执行完立刻执行后一个命令</li>
+<li>命令间有依耐性的命令执行<br>cmd1 &amp;&amp; cmd2 | cmd1执行完毕且正确执行（$?=0），开始执行cmd2。如果执行错误，不执行cmd2<br>cmd1 || cmd2 | cmd1执行完毕且错误执行（$?=0），开始执行cmd2。如果执行正确，不执行cmd2<h5 id="注意：这种方法能够实现的前提是在linux下，如果一个命令的执行结果为正确，就会返回一个-0的值"><a href="#注意：这种方法能够实现的前提是在linux下，如果一个命令的执行结果为正确，就会返回一个-0的值" class="headerlink" title="注意：这种方法能够实现的前提是在linux下，如果一个命令的执行结果为正确，就会返回一个$?=0的值"></a>注意：这种方法能够实现的前提是在linux下，如果一个命令的执行结果为正确，就会返回一个$?=0的值</h5></li>
+</ol>
+<p>例一：不管/tmp/abc是否存在，都要创建/tmp/abc/text文件<br>答：ls /tmp/abc || mkdir /tmp/abc &amp;&amp; touch /tmp/abc/text<br>分两种情况讨论：<br>一：/tmp/abc存在，这样的话”ls /tmp/abc”就会正常执行，返回$?=0,由于后面跟的是||，所以不会执行后面的命令“mkdir /tmp/abc”，命令会接着往后执行，碰到&amp;&amp;命令，正常执行“touch /tmp/abc/text ”<br>二：tmp/abc不存在，不讨论</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/linux之生成Javacore文件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/14/linux之生成Javacore文件/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:41:59+08:00">
+                2019-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<p>title: linux之生成Javacore文件</p>
+<h2 id="tags-Linux"><a href="#tags-Linux" class="headerlink" title="tags: [Linux]"></a>tags: [Linux]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep serverName（服务名） </span><br><span class="line">kill -3 服务pid</span><br></pre></td></tr></table></figure>
+<p>现在Javacore文件就生成了，目录是/proc/51356(pid)/cwd</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/linux之管道命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/14/linux之管道命令/" itemprop="url">linux之管道命令</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:41:34+08:00">
+                2019-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>注意点1：管道命令只会处理标准输出（stdout），忽略标准错误（stderr）</li>
+<li>注意点2：管道命令必须能够接受前一个命令的数据作为标准输入继续处理（像grep等命令）。<h4 id="选取命令"><a href="#选取命令" class="headerlink" title="选取命令"></a>选取命令</h4><h5 id="cut"><a href="#cut" class="headerlink" title="cut"></a>cut</h5></li>
+<li>-d   后面接分割字符，与-f一起使用</li>
+<li>-f   根据-d的分割字符将信息分段，-f后面接的数字代表取出第几段</li>
+<li>-c   以字符的单位取出固定字符区间</li>
+</ul>
+<p>例一：取出path路径的第三和第五个路径  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#123;path&#125; | cut -d &apos;:&apos; -f 3,5</span><br></pre></td></tr></table></figure>
+<p>例二：将export输出的信息，取的第十二个字符之后的所有字符  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export | cut -c 12- //(如果是取第十二个字符之前，就是“-11”，如果是去区间，就是“10-20”)</span><br></pre></td></tr></table></figure>
+<h5 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h5><ul>
+<li>-c    计算查找到字符的次数  </li>
+<li>-i    忽略大小写  </li>
+<li>-n    输出行号  </li>
+<li>-v    反向选择，输出没有‘查找字符’的那一行  </li>
+</ul>
+<p>例一：last输出信息，只要有root就取出，并且只取出第一栏  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">last | grep &apos;root&apos; | cut -d &apos; &apos; -f 1</span><br></pre></td></tr></table></figure>
+<h4 id="排序命令"><a href="#排序命令" class="headerlink" title="排序命令"></a>排序命令</h4><h5 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h5><ul>
+<li>-f   忽略大小写差异  </li>
+<li>-b   忽略最前面空格字符部分  </li>
+<li>-r   反向排序  </li>
+<li>-u   相同数据，仅显示一行  </li>
+<li>-t   分隔符号，默认是用[tab]键进行分隔  </li>
+<li>-k   以哪个区间进行排序</li>
+</ul>
+<p>例一：对系统的所有账号进行排序  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd | sort</span><br></pre></td></tr></table></figure>
+<h5 id="uniq"><a href="#uniq" class="headerlink" title="uniq"></a>uniq</h5><p>例一：last登录信息，获得每个账号的登录总次数  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">last | cut -d &apos; &apos; -f 1 | sort | uniq -c  //注意要加sort</span><br></pre></td></tr></table></figure>
+<h5 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h5><ul>
+<li>-l   仅列出行  </li>
+<li>-w   仅列出字  </li>
+<li>-m   多少字符  </li>
+</ul>
+<h4 id="双向重定向"><a href="#双向重定向" class="headerlink" title="双向重定向"></a>双向重定向</h4><h5 id="tee-同时将数据流分送到屏幕和文件"><a href="#tee-同时将数据流分送到屏幕和文件" class="headerlink" title="tee(同时将数据流分送到屏幕和文件)"></a>tee(同时将数据流分送到屏幕和文件)</h5><ul>
+<li>-a   以累加的形式，将数据加到文件  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">last | tee last.list | cut -d &apos; &apos;</span><br></pre></td></tr></table></figure>
+<h4 id="划分命令"><a href="#划分命令" class="headerlink" title="划分命令"></a>划分命令</h4><h5 id="split"><a href="#split" class="headerlink" title="split"></a>split</h5><ul>
+<li>-b   后面接划分文件的大小，比如说b、k、m等  </li>
+<li>-l   以行数进行划分  </li>
+</ul>
+<p>例一：把/etc/services分成20k大小的文件  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">split -b 20k /etc/services //生成servicesaa、servicesab、servicesac...</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/linux之SHELL中的exit 0 和 exit 1的区别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/14/linux之SHELL中的exit 0 和 exit 1的区别/" itemprop="url">linux之SHELL中的exit 0 和 exit 1的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:41:24+08:00">
+                2019-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>当你 exit 0 的时候,在调用环境 echo $? 就返回0，也就是说调用环境就认为你的这个程序执行正确  </li>
+<li>当你 exit 1 的时候,一般是出错定义这个1，也可以是<strong>其他数字</strong>，很多系统程序这个错误编号是有约定的含义的。 但不为0就表示程序运行出错。调用环境就可以根据这个返回值判断你这个程序运行是否ok。</li>
+<li>例：如果你用 脚本 a 调用 脚本b ，要在a中判断b是否正常返回，就是根据 exit 0 or 1 来识别。<br>执行完b后， 判断 $? 就是返回值</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/5.0系统之环境搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/14/5.0系统之环境搭建/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:41:14+08:00">
+                2019-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<p>title: 5.0系统环境搭建</p>
+<h2 id="tags-yss之5-0环境搭建"><a href="#tags-yss之5-0环境搭建" class="headerlink" title="tags: [yss之5.0环境搭建]"></a>tags: [yss之5.0环境搭建]</h2><h4 id="sofa配置文件"><a href="#sofa配置文件" class="headerlink" title="sofa配置文件"></a>sofa配置文件</h4><ul>
+<li>在服务器的工作目录新建sofa_home文件夹，从其他环境把配置文件复制过来。其中deploy、TempFileData、logs等文件夹的内容不需要，确保存在这层目录就行了</li>
+<li>修改global/datasources.xml数据库配置文件  </li>
+<li>修改app-servel.xml、localhost-env.ini、scheduler.boot文件  <h4 id="was控制台配置"><a href="#was控制台配置" class="headerlink" title="was控制台配置"></a>was控制台配置</h4></li>
+<li>新建服务器  </li>
+<li>进程定义 - 环境条目 - 新建。名称必须为SOFACONFIG_HOME，值为上一步sofa配置文件的绝对路径 </li>
+<li><p>进程定义 - java虚拟机。勾选详细垃圾回收机制，初始堆和最大堆大小都填4096。通用jvm参数输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dfile.encoding=UTF-8 -Dclient.encoding.override=UTF  //平台启动日志出现乱码时可以设置这个</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>java SDK按照要求选择，本项目组都是选择jdk 1.6  </p>
+</li>
+<li>查看端口WC_defaulthost，加入端口自动设置为9084，查看环境 - 虚拟主机 - defaulthost - 主机别名。看列表中有没有对应的端口，如果没有就要新建，否则服务将无法被访问  <h4 id="war包安装"><a href="#war包安装" class="headerlink" title="war包安装"></a>war包安装</h4></li>
+<li>进入企业应用程序界面，点击安装，按照要求选择相应服务器，填写安装地址，填写上下文根  </li>
+</ul>
+<p>注意，此时启动时后台会报没有fundacc全局数据源的错误，这是因为你没有在datasources.xml配置id为fundacc的数据源，这里公司不建议新增数据源，所以手工把报错的组件的数据源改成acs就行了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/惠州游/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -780,811 +1600,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/oracle之误删除数据的恢复方法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="龚宇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/tutu.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BreakPW">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/14/oracle之误删除数据的恢复方法/" itemprop="url">oracle之误删除数据的恢复方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:34:26+08:00">
-                2019-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="delete误删除的解决方法"><a href="#delete误删除的解决方法" class="headerlink" title="delete误删除的解决方法"></a>delete误删除的解决方法</h4><p>原理：利用oracle提供的闪回方法，如果在删除数据后还没做大量的操作（<strong>只要保证被删除数据的块没被覆写</strong>），就可以利用闪回方式直接找回删除的数据  </p>
-<ul>
-<li>确定删除数据的时间（在删除数据之前的时间就行，不过最好是删除数据的时间点）</li>
-<li>用以下语句找出删除的数据：select * from 表名 as of timestamp to_timestamp(‘删除时间点’,’yyyy-mm-dd hh24:mi:ss’)</li>
-<li>把删除的数据重新插入原表：<br>  insert into 表名 (select * from 表名 as of timestamp to_timestamp(‘删除时间点’,’yyyy-mm-dd hh24:mi:ss’));注意要保证主键不重复  </li>
-</ul>
-<h5 id="如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。"><a href="#如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。" class="headerlink" title="如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。"></a>如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。</h5><ul>
-<li>alter table 表名 enable row movement  –开启行移动功能   </li>
-<li>flashback table 表名 to timestamp to_timestamp(删除时间点’,’yyyy-mm-dd hh24:mi:ss’)  –恢复表数据  </li>
-<li>alter table 表名 disable row movement   –关闭行移动功能 ( 千万别忘记 )  </li>
-</ul>
-<p><strong>注意：表闪回要求用户必须要有flash any table权限</strong>  </p>
-<h4 id="drop误删除的解决方法"><a href="#drop误删除的解决方法" class="headerlink" title="drop误删除的解决方法"></a>drop误删除的解决方法</h4><p>原理：由于oracle在删除表时，没有直接清空表所占的块,oracle把这些已删除的表的信息放到了一个虚拟容器“回收站”中，而只是对该表的数据块做了可以被覆写的标志，所以在块未被重新使用前还可以恢复。  </p>
-<ul>
-<li>查询这个“回收站”或者查询user_table视图来查找已被删除的表:</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select table_name,dropped from user_tables</span><br><span class="line">select object_name,original_name,type,droptime from user_recyclebin</span><br></pre></td></tr></table></figure>
-<p>注意： 在以上信息中，表名都是被重命名过的，字段table_name或者object_name就是删除后在回收站中的存放表名  </p>
-<ul>
-<li>如果还能记住表名，则可以用下面语句直接恢复：  </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flashback table 原表名 to before drop</span><br></pre></td></tr></table></figure>
-<ul>
-<li>如果记不住了，也可以直接使用回收站的表名进行恢复，然后再重命名，参照以下语句：  </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flashback table &quot;回收站中的表名(如：Bin$DSbdfd4rdfdfdfegdfsf==$0)&quot; to before drop rename to 新表名</span><br></pre></td></tr></table></figure>
-<ul>
-<li>oracle的闪回功能除了以上基本功能外，还可以闪回整个数据库：使用数据库闪回功能，可以使数据库回到过去某一状态, 语法如下：  </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt;alter database flashback on</span><br><span class="line">SQL&gt;flashback database to scn SCNNO;</span><br><span class="line">SQL&gt;flashback database to timestamp to_timestamp(&apos;2007-2-12 12:00:00&apos;,&apos;yyyy-mm-dd hh24:mi:ss&apos;);</span><br></pre></td></tr></table></figure>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>oracle提供以上机制保证了安全操作，但同时也代来了另外一个问题，就是空间占用，由于以上机制的运行，使用drop一个表或者delete数据后，空间不会自动回收，对于一些确定不使用的表，删除时要同时回收空间，可以有以下2种方式：</p>
-<ul>
-<li>采用truncate方式进行截断。（但不能进行数据回恢复了）  </li>
-<li>在drop时加上purge选项：drop table 表名 purge<br>也可以通过删除recyclebin区域来永久性删除表 ,原始删除表drop table emp cascade constraints<br>purge table emp;<ul>
-<li>删除当前用户的回收站:<br>purge recyclebin;  </li>
-<li>删除全体用户在回收站的数据:<br>purge dba_recyclebin</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/5.0系统之环境搭建/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="龚宇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/tutu.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BreakPW">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/14/5.0系统之环境搭建/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:29:13+08:00">
-                2019-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <hr>
-<p>title: 5.0系统环境搭建</p>
-<h2 id="tags-yss之5-0环境搭建"><a href="#tags-yss之5-0环境搭建" class="headerlink" title="tags:[yss之5.0环境搭建]"></a>tags:[yss之5.0环境搭建]</h2><h4 id="sofa配置文件"><a href="#sofa配置文件" class="headerlink" title="sofa配置文件"></a>sofa配置文件</h4><ul>
-<li>在服务器的工作目录新建sofa_home文件夹，从其他环境把配置文件复制过来。其中deploy、TempFileData、logs等文件夹的内容不需要，确保存在这层目录就行了</li>
-<li>修改global/datasources.xml数据库配置文件  </li>
-<li>修改app-servel.xml、localhost-env.ini、scheduler.boot文件  <h4 id="was控制台配置"><a href="#was控制台配置" class="headerlink" title="was控制台配置"></a>was控制台配置</h4></li>
-<li>新建服务器  </li>
-<li>进程定义 - 环境条目 - 新建。名称必须为SOFACONFIG_HOME，值为上一步sofa配置文件的绝对路径 </li>
-<li><p>进程定义 - java虚拟机。勾选详细垃圾回收机制，初始堆和最大堆大小都填4096。通用jvm参数输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dfile.encoding=UTF-8 -Dclient.encoding.override=UTF  //平台启动日志出现乱码时可以设置这个</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>java SDK按照要求选择，本项目组都是选择jdk 1.6  </p>
-</li>
-<li>查看端口WC_defaulthost，加入端口自动设置为9084，查看环境 - 虚拟主机 - defaulthost - 主机别名。看列表中有没有对应的端口，如果没有就要新建，否则服务将无法被访问  <h4 id="war包安装"><a href="#war包安装" class="headerlink" title="war包安装"></a>war包安装</h4></li>
-<li>进入企业应用程序界面，点击安装，按照要求选择相应服务器，填写安装地址，填写上下文根  </li>
-</ul>
-<p>注意，此时启动时后台会报没有fundacc全局数据源的错误，这是因为你没有在datasources.xml配置id为fundacc的数据源，这里公司不建议新增数据源，所以手工把报错的组件的数据源改成acs就行了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/linux之正则表达式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="龚宇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/tutu.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BreakPW">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/14/linux之正则表达式/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:27:12+08:00">
-                2019-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <hr>
-<p>title: linux之正则表达式</p>
-<h2 id="tags-Linux"><a href="#tags-Linux" class="headerlink" title="tags:[Linux]"></a>tags:[Linux]</h2><h4 id="语系对正则表达式的影响"><a href="#语系对正则表达式的影响" class="headerlink" title="语系对正则表达式的影响"></a>语系对正则表达式的影响</h4><p>了解下面几个特殊符号代表的意义  </p>
-<ul>
-<li>[:alnum:]  代表英文大小写字符以及数字</li>
-<li>[:alpha:]  代表英文大小写</li>
-<li>[:digit:]  代表数字</li>
-<li>[:lower:]  代表英文小写</li>
-<li>[:upper:]  代表英文大写</li>
-<li>[:punct:]  代表标点符号：”、’、?、!、；、#、$等  <h4 id="正则表达式的练习"><a href="#正则表达式的练习" class="headerlink" title="正则表达式的练习"></a>正则表达式的练习</h4><h5 id="查找特定字符串"><a href="#查找特定字符串" class="headerlink" title="查找特定字符串"></a>查找特定字符串</h5></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -n &apos;the&apos; test.txt //查找含有the的行，n参数代表显示行号，被查找的字符单引号或者双引号括起来，或者不使用单双引号都可以，如果想要反向选择，加上v参数</span><br></pre></td></tr></table></figure>
-<h5 id="利用-来查找集合字符"><a href="#利用-来查找集合字符" class="headerlink" title="利用[]来查找集合字符"></a>利用[]来查找集合字符</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">grep -n &apos;t[ab]st&apos; text.txt //查找含有tast，tbst字符的行</span><br><span class="line">grep -n &apos;[^g]oo&apos; text.txt //查找含有oo，但是oo前面不为g的行</span><br><span class="line">grep -n &apos;[0-9]&apos; text.txt //查找有数字的那一行</span><br><span class="line">grep -n &apos;[[:digit:]]&apos; text.txt //效果同上，为了避免语系带来的差异，可以使用特殊符号代替</span><br></pre></td></tr></table></figure>
-<h5 id="行首与行尾字符"><a href="#行首与行尾字符" class="headerlink" title="行首与行尾字符^$"></a>行首与行尾字符^$</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grep -n &apos;^the&apos; test.txt //以the开头的行</span><br><span class="line">grep -n &apos;^[a-z]&apos; test.txt //以小写字母开头行</span><br><span class="line">grep -n &apos;^[^A-Za-z]&apos; test.txt //不以字母开头的行，这里就需要注意^号在[]里面和外面的含义</span><br><span class="line">grep -n &apos;\.$&apos; test.txt //以.号结尾的行，因为.是特殊字符，所以要用\转义</span><br><span class="line">grep -n &apos;^$&apos; test.txt //空行</span><br></pre></td></tr></table></figure>
-<h5 id="任意字符与重复字符"><a href="#任意字符与重复字符" class="headerlink" title="任意字符与重复字符.*"></a>任意字符与重复字符.*</h5><ul>
-<li>.代表一定有一个任意字符  </li>
-<li>*代表重复前一个字符，0到无穷多次  </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grep -n &apos;g..d&apos; test.txt //查找含有g??d的行，例如hgood,gngd,hgoodk等</span><br><span class="line">grep -n &apos;o*&apos; test.txt //所有行都会打印出来，因为o*代表0个字符或者一个o以上的字符</span><br><span class="line">grep -n &apos;g.*g&apos; test.txt //.*代表0个或多个任意字符</span><br><span class="line">```  </span><br><span class="line">#####  限定连续字符范围&#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>grep -n ‘o{2}‘ test.txt //显示含有两个o的行<br>grep -n ‘o{2,5}}’ test.txt //显示含有2到5个o的行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">####  通配符  </span><br><span class="line">*  *代表0到无穷多个字符  </span><br><span class="line">*  ？代表一定有一个任意字符</span><br><span class="line">*  [ ]代表一定有一个在括号内的任意字符  </span><br><span class="line">*  [-]代表在编码顺序内的所有字符</span><br><span class="line">*  [^]代表反向选择</span><br></pre></td></tr></table></figure></p>
-<p>ls -l ./corn<em> //代表显示当前文件夹下文件名为corn开头的文件<br>ls -l ./??? //代表显示当前文件夹下文件名为3个字符的文件<br>ls -l ./</em>[0-9]<em> //代表显示当前文件夹下文件名含有数字的文件，记得加上两个</em><br>ls -l ./[^a-z]* //代表显示当前文件夹下文件名不以小写字母开头的文件<br><code>`</code><br>注意点<br><strong>通配符一般只用于文件名匹配，它是由shell解析的，比如find，ls，cp，mv等。</strong><br><strong>正则表达式是用来匹配字符串的，针对文件内容的文本过滤工具里，大都用到正则表达式，如vi，grep，awk，sed等。</strong></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/linux之生成Javacore文件/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="龚宇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/tutu.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BreakPW">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/14/linux之生成Javacore文件/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:27:12+08:00">
-                2019-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <hr>
-<p>title: linux之生成Javacore文件</p>
-<h2 id="tags-Linux"><a href="#tags-Linux" class="headerlink" title="tags:[Linux]"></a>tags:[Linux]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep serverName（服务名） </span><br><span class="line">kill -3 服务pid</span><br></pre></td></tr></table></figure>
-<p>现在Javacore文件就生成了，目录是/proc/51356(pid)/cwd</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/搭建个人免费博客/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="龚宇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/tutu.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BreakPW">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/25/搭建个人免费博客/" itemprop="url">github和hexo搭建个人免费博客</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T00:13:45+08:00">
-                2019-03-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="安装node"><a href="#安装node" class="headerlink" title="安装node"></a>安装node</h4><p>作用是生成静态页面（github上存的都是静态页面）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -</span><br><span class="line">curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -   // 如果想用6.x版本</span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/25/搭建个人免费博客/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/与室友游广州/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="龚宇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/tutu.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BreakPW">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/25/与室友游广州/" itemprop="url">对着珠江喝酒打屁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T00:09:33+08:00">
-                2019-03-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<p><img src="/picture/与室友游广州/1.png" alt="图一"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1630,7 +1652,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1643,7 +1665,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1704,7 +1726,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共4.2k字</span>
+  <span class="post-count">博客全站共5.4k字</span>
 </div>
 
 

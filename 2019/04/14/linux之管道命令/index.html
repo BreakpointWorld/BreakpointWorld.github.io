@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Oracle,">
+  <meta name="keywords" content="Linux,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="-   查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &amp;quot;表空间名&amp;quot;,       　　D.TOT_GROOTTE_MB &amp;quot;表空间大小(M)&amp;quot;,       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &amp;quot;已使用空间(M)&amp;quot">
-<meta name="keywords" content="Oracle">
+<meta name="description" content="注意点1：管道命令只会处理标准输出（stdout），忽略标准错误（stderr） 注意点2：管道命令必须能够接受前一个命令的数据作为标准输入继续处理（像grep等命令）。选取命令cut -d   后面接分割字符，与-f一起使用 -f   根据-d的分割字符将信息分段，-f后面接的数字代表取出第几段 -c   以字符的单位取出固定字符区间  例一：取出path路径的第三和第五个路径   1echo">
+<meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据库空间查看和连接数查看">
-<meta property="og:url" content="http://yoursite.com/2019/04/14/Oracle之数据库空间查看和连接数查看/index.html">
+<meta property="og:title" content="linux之管道命令">
+<meta property="og:url" content="http://yoursite.com/2019/04/14/linux之管道命令/index.html">
 <meta property="og:site_name" content="BreakPW">
-<meta property="og:description" content="-   查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &amp;quot;表空间名&amp;quot;,       　　D.TOT_GROOTTE_MB &amp;quot;表空间大小(M)&amp;quot;,       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &amp;quot;已使用空间(M)&amp;quot">
+<meta property="og:description" content="注意点1：管道命令只会处理标准输出（stdout），忽略标准错误（stderr） 注意点2：管道命令必须能够接受前一个命令的数据作为标准输入继续处理（像grep等命令）。选取命令cut -d   后面接分割字符，与-f一起使用 -f   根据-d的分割字符将信息分段，-f后面接的数字代表取出第几段 -c   以字符的单位取出固定字符区间  例一：取出path路径的第三和第五个路径   1echo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-13T16:34:05.588Z">
+<meta property="og:updated_time" content="2019-04-13T16:41:34.131Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据库空间查看和连接数查看">
-<meta name="twitter:description" content="-   查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &amp;quot;表空间名&amp;quot;,       　　D.TOT_GROOTTE_MB &amp;quot;表空间大小(M)&amp;quot;,       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &amp;quot;已使用空间(M)&amp;quot">
+<meta name="twitter:title" content="linux之管道命令">
+<meta name="twitter:description" content="注意点1：管道命令只会处理标准输出（stdout），忽略标准错误（stderr） 注意点2：管道命令必须能够接受前一个命令的数据作为标准输入继续处理（像grep等命令）。选取命令cut -d   后面接分割字符，与-f一起使用 -f   根据-d的分割字符将信息分段，-f后面接的数字代表取出第几段 -c   以字符的单位取出固定字符区间  例一：取出path路径的第三和第五个路径   1echo">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/14/Oracle之数据库空间查看和连接数查看/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/14/linux之管道命令/">
 
 
 
 
 
-  <title>数据库空间查看和连接数查看 | BreakPW</title>
+  <title>linux之管道命令 | BreakPW</title>
   
 
 
@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/Oracle之数据库空间查看和连接数查看/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/linux之管道命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="龚宇">
@@ -292,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数据库空间查看和连接数查看</h1>
+          <h1 class="post-title" itemprop="name headline">linux之管道命令</h1>
         
 
         <div class="post-meta">
@@ -304,7 +304,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:34:26+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T00:41:34+08:00">
                 2019-04-14
               </time>
             
@@ -342,14 +342,53 @@
       
 
       
-        <h5 id="查询表空间的大小和占用率"><a href="#查询表空间的大小和占用率" class="headerlink" title="-   查询表空间的大小和占用率"></a>-   查询表空间的大小和占用率</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;,</span><br><span class="line">       　　D.TOT_GROOTTE_MB &quot;表空间大小(M)&quot;,</span><br><span class="line">       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;,</span><br><span class="line">       　　TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) /</span><br><span class="line">                       D.TOT_GROOTTE_MB * 100,</span><br><span class="line">                       2),</span><br><span class="line">                 　　 &apos;990.99&apos;) &quot;使用比&quot;,</span><br><span class="line">       　　F.TOTAL_BYTES &quot;空闲空间(M)&quot;,</span><br><span class="line">       　　F.MAX_BYTES &quot;最大块(M)&quot; 　　</span><br><span class="line">		FROM (SELECT TABLESPACE_NAME,</span><br><span class="line">         　　ROUND(SUM(BYTES) / (1024 * 1024),2) TOTAL_BYTES,</span><br><span class="line">             ROUND(MAX(BYTES) / (1024 * 1024),2) MAX_BYTES 　　</span><br><span class="line">             FROM SYS.DBA_FREE_SPACE 　　</span><br><span class="line">             GROUP BY TABLESPACE_NAME) F,</span><br><span class="line"> 　 		(SELECT DD.TABLESPACE_NAME,</span><br><span class="line">         　　	ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_DATA_FILES DD  GROUP BY DD.TABLESPACE_NAME) D 　　</span><br><span class="line">			WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME 　　</span><br><span class="line">		ORDER BY 4 DESC</span><br></pre></td></tr></table></figure>
-<h5 id="查看最大连接数"><a href="#查看最大连接数" class="headerlink" title="-   查看最大连接数"></a>-   查看最大连接数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">      SQL&gt; select count(*) from v$session #当前的连接数</span><br><span class="line">SQL&gt; Select count(*) from v$session where status=&apos;ACTIVE&apos; #并发连接数</span><br><span class="line">SQL&gt; select value from v$parameter where name = &apos;processes&apos; --数据库允许的最大连接数</span><br><span class="line">SQL&gt; show parameter processes #最大连接 </span><br><span class="line">SQL&gt; select username,count(username) from v$session where username is not null group by username; #查看不同用户的连接数</span><br></pre></td></tr></table></figure>
-<h5 id="修改最大连接数"><a href="#修改最大连接数" class="headerlink" title="-   修改最大连接数"></a>-   修改最大连接数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter system set processes = 2000 scope = spfile;</span><br></pre></td></tr></table></figure>
-<h5 id="重启数据库"><a href="#重启数据库" class="headerlink" title="-   重启数据库"></a>-   重启数据库</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shutdown immediate;</span><br><span class="line">startup;</span><br></pre></td></tr></table></figure>
-<h5 id="监听操作"><a href="#监听操作" class="headerlink" title="-   监听操作"></a>-   监听操作</h5><pre><code>监听查看:lsnrctl status   
-启动监听:lsnrctl start   
-停止监听:lsnrctl stop
-</code></pre>
+        <ul>
+<li>注意点1：管道命令只会处理标准输出（stdout），忽略标准错误（stderr）</li>
+<li>注意点2：管道命令必须能够接受前一个命令的数据作为标准输入继续处理（像grep等命令）。<h4 id="选取命令"><a href="#选取命令" class="headerlink" title="选取命令"></a>选取命令</h4><h5 id="cut"><a href="#cut" class="headerlink" title="cut"></a>cut</h5></li>
+<li>-d   后面接分割字符，与-f一起使用</li>
+<li>-f   根据-d的分割字符将信息分段，-f后面接的数字代表取出第几段</li>
+<li>-c   以字符的单位取出固定字符区间</li>
+</ul>
+<p>例一：取出path路径的第三和第五个路径  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#123;path&#125; | cut -d &apos;:&apos; -f 3,5</span><br></pre></td></tr></table></figure>
+<p>例二：将export输出的信息，取的第十二个字符之后的所有字符  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export | cut -c 12- //(如果是取第十二个字符之前，就是“-11”，如果是去区间，就是“10-20”)</span><br></pre></td></tr></table></figure>
+<h5 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h5><ul>
+<li>-c    计算查找到字符的次数  </li>
+<li>-i    忽略大小写  </li>
+<li>-n    输出行号  </li>
+<li>-v    反向选择，输出没有‘查找字符’的那一行  </li>
+</ul>
+<p>例一：last输出信息，只要有root就取出，并且只取出第一栏  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">last | grep &apos;root&apos; | cut -d &apos; &apos; -f 1</span><br></pre></td></tr></table></figure>
+<h4 id="排序命令"><a href="#排序命令" class="headerlink" title="排序命令"></a>排序命令</h4><h5 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h5><ul>
+<li>-f   忽略大小写差异  </li>
+<li>-b   忽略最前面空格字符部分  </li>
+<li>-r   反向排序  </li>
+<li>-u   相同数据，仅显示一行  </li>
+<li>-t   分隔符号，默认是用[tab]键进行分隔  </li>
+<li>-k   以哪个区间进行排序</li>
+</ul>
+<p>例一：对系统的所有账号进行排序  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd | sort</span><br></pre></td></tr></table></figure>
+<h5 id="uniq"><a href="#uniq" class="headerlink" title="uniq"></a>uniq</h5><p>例一：last登录信息，获得每个账号的登录总次数  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">last | cut -d &apos; &apos; -f 1 | sort | uniq -c  //注意要加sort</span><br></pre></td></tr></table></figure>
+<h5 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h5><ul>
+<li>-l   仅列出行  </li>
+<li>-w   仅列出字  </li>
+<li>-m   多少字符  </li>
+</ul>
+<h4 id="双向重定向"><a href="#双向重定向" class="headerlink" title="双向重定向"></a>双向重定向</h4><h5 id="tee-同时将数据流分送到屏幕和文件"><a href="#tee-同时将数据流分送到屏幕和文件" class="headerlink" title="tee(同时将数据流分送到屏幕和文件)"></a>tee(同时将数据流分送到屏幕和文件)</h5><ul>
+<li>-a   以累加的形式，将数据加到文件  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">last | tee last.list | cut -d &apos; &apos;</span><br></pre></td></tr></table></figure>
+<h4 id="划分命令"><a href="#划分命令" class="headerlink" title="划分命令"></a>划分命令</h4><h5 id="split"><a href="#split" class="headerlink" title="split"></a>split</h5><ul>
+<li>-b   后面接划分文件的大小，比如说b、k、m等  </li>
+<li>-l   以行数进行划分  </li>
+</ul>
+<p>例一：把/etc/services分成20k大小的文件  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">split -b 20k /etc/services //生成servicesaa、servicesab、servicesac...</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -366,7 +405,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
         </div>
       
@@ -379,8 +418,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/14/oracle之数据泵操作/" rel="next" title="oracle操作之数据泵操作">
-                <i class="fa fa-chevron-left"></i> oracle操作之数据泵操作
+              <a href="/2019/04/14/linux之SHELL中的exit 0 和 exit 1的区别/" rel="next" title="linux之SHELL中的exit 0 和 exit 1的区别">
+                <i class="fa fa-chevron-left"></i> linux之SHELL中的exit 0 和 exit 1的区别
               </a>
             
           </div>
@@ -389,8 +428,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/14/oracle之查询表空大小和连接数/" rel="prev" title="数据库空间查看和连接数查看">
-                数据库空间查看和连接数查看 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/14/linux之生成Javacore文件/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -516,7 +555,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#查询表空间的大小和占用率"><span class="nav-number">1.</span> <span class="nav-text">-   查询表空间的大小和占用率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看最大连接数"><span class="nav-number">2.</span> <span class="nav-text">-   查看最大连接数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修改最大连接数"><span class="nav-number">3.</span> <span class="nav-text">-   修改最大连接数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重启数据库"><span class="nav-number">4.</span> <span class="nav-text">-   重启数据库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#监听操作"><span class="nav-number">5.</span> <span class="nav-text">-   监听操作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#选取命令"><span class="nav-number">1.</span> <span class="nav-text">选取命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cut"><span class="nav-number">1.1.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#grep"><span class="nav-number">1.2.</span> <span class="nav-text">grep</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排序命令"><span class="nav-number">2.</span> <span class="nav-text">排序命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#sort"><span class="nav-number">2.1.</span> <span class="nav-text">sort</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uniq"><span class="nav-number">2.2.</span> <span class="nav-text">uniq</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#wc"><span class="nav-number">2.3.</span> <span class="nav-text">wc</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双向重定向"><span class="nav-number">3.</span> <span class="nav-text">双向重定向</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#tee-同时将数据流分送到屏幕和文件"><span class="nav-number">3.1.</span> <span class="nav-text">tee(同时将数据流分送到屏幕和文件)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#划分命令"><span class="nav-number">4.</span> <span class="nav-text">划分命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#split"><span class="nav-number">4.1.</span> <span class="nav-text">split</span></a></li></ol></li></ol></div>
             
 
           </div>

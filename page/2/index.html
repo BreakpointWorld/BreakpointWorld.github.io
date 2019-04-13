@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Oracle,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,18 +79,16 @@
 
 
 
-<meta name="description" content="-   查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &amp;quot;表空间名&amp;quot;,       　　D.TOT_GROOTTE_MB &amp;quot;表空间大小(M)&amp;quot;,       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &amp;quot;已使用空间(M)&amp;quot">
-<meta name="keywords" content="Oracle">
-<meta property="og:type" content="article">
-<meta property="og:title" content="数据库空间查看和连接数查看">
-<meta property="og:url" content="http://yoursite.com/2019/04/14/Oracle之数据库空间查看和连接数查看/index.html">
+<meta name="description" content="记录这个花花世界">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BreakPW">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="BreakPW">
-<meta property="og:description" content="-   查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &amp;quot;表空间名&amp;quot;,       　　D.TOT_GROOTTE_MB &amp;quot;表空间大小(M)&amp;quot;,       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &amp;quot;已使用空间(M)&amp;quot">
+<meta property="og:description" content="记录这个花花世界">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-13T16:34:05.588Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据库空间查看和连接数查看">
-<meta name="twitter:description" content="-   查询表空间的大小和占用率123456789101112131415161718SELECT UPPER(F.TABLESPACE_NAME) &amp;quot;表空间名&amp;quot;,       　　D.TOT_GROOTTE_MB &amp;quot;表空间大小(M)&amp;quot;,       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &amp;quot;已使用空间(M)&amp;quot">
+<meta name="twitter:title" content="BreakPW">
+<meta name="twitter:description" content="记录这个花花世界">
 
 
 
@@ -120,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/14/Oracle之数据库空间查看和连接数查看/">
+  <link rel="canonical" href="http://yoursite.com/page/2/">
 
 
 
 
 
-  <title>数据库空间查看和连接数查看 | BreakPW</title>
+  <title>BreakPW</title>
   
 
 
@@ -145,7 +143,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -260,9 +259,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -275,7 +274,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/Oracle之数据库空间查看和连接数查看/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/oracle之误删除数据的恢复方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="龚宇">
@@ -292,7 +291,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数据库空间查看和连接数查看</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/14/oracle之误删除数据的恢复方法/" itemprop="url">oracle之误删除数据的恢复方法</a></h1>
         
 
         <div class="post-meta">
@@ -342,14 +343,50 @@
       
 
       
-        <h5 id="查询表空间的大小和占用率"><a href="#查询表空间的大小和占用率" class="headerlink" title="-   查询表空间的大小和占用率"></a>-   查询表空间的大小和占用率</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;,</span><br><span class="line">       　　D.TOT_GROOTTE_MB &quot;表空间大小(M)&quot;,</span><br><span class="line">       　　D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;,</span><br><span class="line">       　　TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) /</span><br><span class="line">                       D.TOT_GROOTTE_MB * 100,</span><br><span class="line">                       2),</span><br><span class="line">                 　　 &apos;990.99&apos;) &quot;使用比&quot;,</span><br><span class="line">       　　F.TOTAL_BYTES &quot;空闲空间(M)&quot;,</span><br><span class="line">       　　F.MAX_BYTES &quot;最大块(M)&quot; 　　</span><br><span class="line">		FROM (SELECT TABLESPACE_NAME,</span><br><span class="line">         　　ROUND(SUM(BYTES) / (1024 * 1024),2) TOTAL_BYTES,</span><br><span class="line">             ROUND(MAX(BYTES) / (1024 * 1024),2) MAX_BYTES 　　</span><br><span class="line">             FROM SYS.DBA_FREE_SPACE 　　</span><br><span class="line">             GROUP BY TABLESPACE_NAME) F,</span><br><span class="line"> 　 		(SELECT DD.TABLESPACE_NAME,</span><br><span class="line">         　　	ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_DATA_FILES DD  GROUP BY DD.TABLESPACE_NAME) D 　　</span><br><span class="line">			WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME 　　</span><br><span class="line">		ORDER BY 4 DESC</span><br></pre></td></tr></table></figure>
-<h5 id="查看最大连接数"><a href="#查看最大连接数" class="headerlink" title="-   查看最大连接数"></a>-   查看最大连接数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">      SQL&gt; select count(*) from v$session #当前的连接数</span><br><span class="line">SQL&gt; Select count(*) from v$session where status=&apos;ACTIVE&apos; #并发连接数</span><br><span class="line">SQL&gt; select value from v$parameter where name = &apos;processes&apos; --数据库允许的最大连接数</span><br><span class="line">SQL&gt; show parameter processes #最大连接 </span><br><span class="line">SQL&gt; select username,count(username) from v$session where username is not null group by username; #查看不同用户的连接数</span><br></pre></td></tr></table></figure>
-<h5 id="修改最大连接数"><a href="#修改最大连接数" class="headerlink" title="-   修改最大连接数"></a>-   修改最大连接数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter system set processes = 2000 scope = spfile;</span><br></pre></td></tr></table></figure>
-<h5 id="重启数据库"><a href="#重启数据库" class="headerlink" title="-   重启数据库"></a>-   重启数据库</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shutdown immediate;</span><br><span class="line">startup;</span><br></pre></td></tr></table></figure>
-<h5 id="监听操作"><a href="#监听操作" class="headerlink" title="-   监听操作"></a>-   监听操作</h5><pre><code>监听查看:lsnrctl status   
-启动监听:lsnrctl start   
-停止监听:lsnrctl stop
-</code></pre>
+        
+          
+            <h4 id="delete误删除的解决方法"><a href="#delete误删除的解决方法" class="headerlink" title="delete误删除的解决方法"></a>delete误删除的解决方法</h4><p>原理：利用oracle提供的闪回方法，如果在删除数据后还没做大量的操作（<strong>只要保证被删除数据的块没被覆写</strong>），就可以利用闪回方式直接找回删除的数据  </p>
+<ul>
+<li>确定删除数据的时间（在删除数据之前的时间就行，不过最好是删除数据的时间点）</li>
+<li>用以下语句找出删除的数据：select * from 表名 as of timestamp to_timestamp(‘删除时间点’,’yyyy-mm-dd hh24:mi:ss’)</li>
+<li>把删除的数据重新插入原表：<br>  insert into 表名 (select * from 表名 as of timestamp to_timestamp(‘删除时间点’,’yyyy-mm-dd hh24:mi:ss’));注意要保证主键不重复  </li>
+</ul>
+<h5 id="如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。"><a href="#如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。" class="headerlink" title="如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。"></a>如果表结构没有发生改变，还可以直接使用闪回整个表的方式来恢复数据。</h5><ul>
+<li>alter table 表名 enable row movement  –开启行移动功能   </li>
+<li>flashback table 表名 to timestamp to_timestamp(删除时间点’,’yyyy-mm-dd hh24:mi:ss’)  –恢复表数据  </li>
+<li>alter table 表名 disable row movement   –关闭行移动功能 ( 千万别忘记 )  </li>
+</ul>
+<p><strong>注意：表闪回要求用户必须要有flash any table权限</strong>  </p>
+<h4 id="drop误删除的解决方法"><a href="#drop误删除的解决方法" class="headerlink" title="drop误删除的解决方法"></a>drop误删除的解决方法</h4><p>原理：由于oracle在删除表时，没有直接清空表所占的块,oracle把这些已删除的表的信息放到了一个虚拟容器“回收站”中，而只是对该表的数据块做了可以被覆写的标志，所以在块未被重新使用前还可以恢复。  </p>
+<ul>
+<li>查询这个“回收站”或者查询user_table视图来查找已被删除的表:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select table_name,dropped from user_tables</span><br><span class="line">select object_name,original_name,type,droptime from user_recyclebin</span><br></pre></td></tr></table></figure>
+<p>注意： 在以上信息中，表名都是被重命名过的，字段table_name或者object_name就是删除后在回收站中的存放表名  </p>
+<ul>
+<li>如果还能记住表名，则可以用下面语句直接恢复：  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flashback table 原表名 to before drop</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果记不住了，也可以直接使用回收站的表名进行恢复，然后再重命名，参照以下语句：  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flashback table &quot;回收站中的表名(如：Bin$DSbdfd4rdfdfdfegdfsf==$0)&quot; to before drop rename to 新表名</span><br></pre></td></tr></table></figure>
+<ul>
+<li>oracle的闪回功能除了以上基本功能外，还可以闪回整个数据库：使用数据库闪回功能，可以使数据库回到过去某一状态, 语法如下：  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt;alter database flashback on</span><br><span class="line">SQL&gt;flashback database to scn SCNNO;</span><br><span class="line">SQL&gt;flashback database to timestamp to_timestamp(&apos;2007-2-12 12:00:00&apos;,&apos;yyyy-mm-dd hh24:mi:ss&apos;);</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>oracle提供以上机制保证了安全操作，但同时也代来了另外一个问题，就是空间占用，由于以上机制的运行，使用drop一个表或者delete数据后，空间不会自动回收，对于一些确定不使用的表，删除时要同时回收空间，可以有以下2种方式：</p>
+<ul>
+<li>采用truncate方式进行截断。（但不能进行数据回恢复了）  </li>
+<li>在drop时加上purge选项：drop table 表名 purge<br>也可以通过删除recyclebin区域来永久性删除表 ,原始删除表drop table emp cascade constraints<br>purge table emp;<ul>
+<li>删除当前用户的回收站:<br>purge recyclebin;  </li>
+<li>删除全体用户在回收站的数据:<br>purge dba_recyclebin</li>
+</ul>
+</li>
+</ul>
+
+          
+        
       
     </div>
     
@@ -364,40 +401,14 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Oracle/" rel="tag"># Oracle</a>
-          
-        </div>
+
+      
+
       
 
       
       
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/04/14/oracle之数据泵操作/" rel="next" title="oracle操作之数据泵操作">
-                <i class="fa fa-chevron-left"></i> oracle操作之数据泵操作
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/14/oracle之查询表空大小和连接数/" rel="prev" title="数据库空间查看和连接数查看">
-                数据库空间查看和连接数查看 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -407,11 +418,259 @@
   </article>
 
 
+    
+      
 
-    <div class="post-spread">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/搭建个人免费博客/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/25/搭建个人免费博客/" itemprop="url">github和hexo搭建个人免费博客</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T00:13:45+08:00">
+                2019-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="安装node"><a href="#安装node" class="headerlink" title="安装node"></a>安装node</h4><p>作用是生成静态页面（github上存的都是静态页面）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -</span><br><span class="line">curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -   // 如果想用6.x版本</span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/25/搭建个人免费博客/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/与室友游广州/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="龚宇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/tutu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BreakPW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/25/与室友游广州/" itemprop="url">对着珠江喝酒打屁</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T00:09:33+08:00">
+                2019-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<p><img src="/picture/与室友游广州/1.png" alt="图一"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
           </div>
@@ -419,10 +678,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -443,17 +698,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -506,22 +752,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#查询表空间的大小和占用率"><span class="nav-number">1.</span> <span class="nav-text">-   查询表空间的大小和占用率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看最大连接数"><span class="nav-number">2.</span> <span class="nav-text">-   查看最大连接数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修改最大连接数"><span class="nav-number">3.</span> <span class="nav-text">-   修改最大连接数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重启数据库"><span class="nav-number">4.</span> <span class="nav-text">-   重启数据库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#监听操作"><span class="nav-number">5.</span> <span class="nav-text">-   监听操作</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -661,10 +891,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
